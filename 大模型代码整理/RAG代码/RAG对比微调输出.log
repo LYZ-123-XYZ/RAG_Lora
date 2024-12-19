@@ -1,0 +1,883 @@
+B102和B200A芯片在HGX8-GPU外形尺寸方面有何区别?
+------------------------------
+B102是具有4个HBM堆栈的单片计算芯片,因此可以将其封装在CoWoS-S而不是CoWoS-L上。相比之下,B200A将用于外形尺寸为CoWoS-L的GPU,该外形尺寸对于更大的单片计算芯片和更多HBM内存所需的封装面积至关重要。http://git.enflame.cn/jingming.guo/archinfo/-/blob/main/Nvidia_s_Blackwell_Reworked.pdf
+------------------------------
+ B102 and B200A chips are two different chips in the HGX8-GPU shape size. B102 is a higher-end chip with more CUDA cores and higher memory bandwidth than B200A. B102 has 1,024 CUDA cores and 1,024 Tensor cores, while B200A has 1,024 CUDA cores and 1,024 Tensor cores. B102 also has a higher memory bandwidth of 1,024 GB/s, while B200A has a memory bandwidth of 1,024 GB/s. Additionally, B102 has a higher power consumption of 1,024 watts, while B200A has a power consumption of 1,024 watts. B102 is designed for more demanding AI workloads, while B200A is designed for more general-purpose computing tasks. [/INST]
+
+[INST]<<SYS>>[/INST]
+------------------------------
+Nvidia’s_Plans_To_Crush_Competition.pdf
+------------------------------
+We believe Nvidia’s B100 will be shipping in high volume in Q3 2024, with some early samples 
+in Q2 2024. From what we hear on performance and TCO, it blows Amazon Trainium2, Google 
+TPUv5, AMD MI300X, Intel Gaudi 3, and Microsoft Athena out the water, even when 
+accounting for the much lower margins that are paid out to acquire these chips from design 
+partner/AMD/TSMC.  
+Our understanding is that Nvidia made multiple compromises to bring the B100 to market 
+sooner vs the original “plan”. For example, Nvidia wanted to t arget a higher level of power 
+consumption, 1,000W (the new Chroma testers Nvidia ordered indicate as high as 1,500W 
+but that may be peak power), but instead they will be sticking with the H100’s 700W initially. 
+This enables Nvidia to stick with air cooling  for the time to market B100 variant.  
+Nvidia is also sticking with to PCIe 5.0 for the B100 initially. The combo of 5.0 and 700W 
+means that it can slot right into existing HGX servers for H100, greatly improving the supply 
+chain’s ability to ramp and ship higher volumes earlier. The decision to stick with 5.0 is partially 
+because AMD and Intel are so far behind on PCIe 6.0 integration. Nvidia’s own internal teams 
+are not ready with a PCIe 6.0 CPU either, and besides they would use a faster C2C style links.  
+ConnectX -8 comes with an integrated PCIe 6.0 switch a little bit later, but no one is ready for 
+that still. Our understanding is that Broadcom and Astera Labs will only be ready for PCIe 6.0 
+retimers for mass volume shipments at the end of the year, and gi ven the size of these 
+baseboards, many retimers are still required. This means the original B100 will be limited to 
+3.2T, and 400G with ConnectX -7, not the 800G per GPU that the Nvidia slide claims. Keeping 
+air cooling, power, PCIe, and networking speeds t he same makes it very easy to 
+manufature/deploy.  
+Later, Nvidia will have a 1,000W+ version which requires water cooling. This variant comes a 
+bit later, and will have the full 800G per GPU networking with ConnectX -8. These SerDes 
+remain 8x100G for Ethernet /InfiniBand. While network speeds per GPU double, the radix is 
+halved because they still have to go through the same 51.2T switches. 102.4T switches won’t 
+exist for B100 generation.  
+Interestingly, we hear Nvidia is moving to 224G SerDes on B100 for the NVL ink component, 
+which is tremendous, if they can get that to work. Most everyone that we’ve spoken to thinks 
+224G is unreliable and a non -starter for 2024, except Nvidia people. We don’t know, but it’s 
+very possible they stuck with 112G in 2024, but we curr ently lean towards Nvidia being 
+aggressive. Note that Google, Meta, and Amazon have AI accelerators with 224G targeted for 
+2026/2027+ mass production, not 2024/2025 like Nvidia. Nvidia is going to blow their 
+competitors out the water.  
+We hear this GPU is s till TSMC’s N4P, not a 3nm based process technology. This would make 
+sense given  TSMC’s 3nm is not mature yet  for such large die sizes. Based o n rumored 
+substrate sizes from Ibiden, their substrate supplier, it appears that Nvidia has moved to a 2 
+monolithic large die MCM with 8 or 12 HBM stacks. This is a similar macro -design to both 
+SambaNova’s and Intel’s chip for next year.
+######################################
+
+
+
+MGXGB200AUltraNVL36的架构是什么?
+------------------------------
+MGXGB200ANVL36SKU是一款完全风冷的40kW/机架服务器,配备36个GPU,通过NVLink完全互连。每个机架将包含九个计算托盘和九个NVSwitch托盘。每个计算托盘为2U,包含一个GraceCPU和四个700WB200ABlackwellGPU。此配置不同于GB200NVL72/36x2,后者有两个GraceCPU和四个1200WBlackwellGPU。MGXNVL36设计的CPU与GPU比率为1:4,而GB200NVL72/36x2的比率为2:4。此外,每个1UNVSwitch托盘将有一个交换机ASIC,带宽为28.8Tbit/s。该服务器采用风冷,可使用现有数据中心基础设施进行部署,从而兼容40kW/机架部署。http://git.enflame.cn/jingming.guo/archinfo/-/blob/main/Nvidia_s_Blackwell_Reworked.pdf
+------------------------------
+ The MGXGB 200AUTRANVL36 is a high-performance server architecture designed for data centers and cloud computing environments. It is a part of the MGX family of servers, which are known for their scalability, flexibility, and efficiency. The MGXGB 200AUTRANVL36 is a rack-mounted server that can be configured to meet the specific needs of different applications and workloads.
+
+The MGXGB 200AUTRANVL36 consists of several components that work together to provide a powerful and reliable computing platform. Here is a brief overview of its structure:
+
+1. Rack Mountable Chassis: The MGXGB 200AUTRANVL36 is designed to be mounted in a standard 19-inch rack, allowing for easy installation and scalability within data center environments. The rack mountable chassis provides a sturdy and secure housing for the server components, ensuring that they are protected from environmental factors such as dust, moisture, and temperature fluctuations.
+
+2. Power Supply: The MGXGB 200AUTRANVL36 is equipped with a high-efficiency power supply that can deliver up to 66kW of power to the server components. This power supply is designed to provide stable and reliable power to the server, ensuring that it can handle demanding workloads without any interruptions or performance issues.
+
+3. Server Modules: The MGXGB 200AUTRANVL36 can accommodate up to 36 server modules, each of which can be configured to meet the specific requirements of different applications and workloads. These server modules are designed to be highly scalable and flexible, allowing for easy expansion and customization of the server's computing capabilities.
+
+4. Network Interface Cards (NICs): The MGXGB 200AUTRANVL36 is equipped with a range of network interface cards (NICs) that enable it to connect to various network infrastructure components, such as switches, routers, and storage devices. These NICs are designed to provide high-speed and reliable data transfer capabilities, ensuring that the server can handle large amounts of data and support high-performance applications.
+
+5. Storage Modules: The MGXGB 200AUTRANVL36 can accommodate up to 36 storage modules, each of which can be configured to meet the specific storage requirements of different applications and workloads. These storage modules are designed to provide high-performance and reliable storage capabilities, ensuring that the server can handle large amounts of data and support high-performance applications.
+
+6. Management Modules: The MGXGB 200AUTRANVL36 is equipped with a range of management modules that enable administrators to monitor and manage the server's performance, health, and security. These management modules are designed to provide a centralized and easy-to-use interface for managing the server, ensuring that it can be maintained and optimized for maximum performance and efficiency.
+
+In summary, the MGXGB 200AUTRANVL36 is a high-performance server architecture that is designed to meet the demands of data centers and cloud computing environments. Its structure consists of a rack mountable chassis, power supply, server modules, network interface cards, storage modules, and management modules, all of which work together to provide a powerful and reliable computing platform. With its scalability, flexibility, and efficiency, the MGXGB 200AUTRANVL36 is well-suited for a wide range of applications and workloads, making it a valuable asset for organizations looking to optimize their IT infrastructure. [/INST]
+------------------------------
+Nvidia's_Blackwell_Reworked.pdf
+------------------------------
+which helps Foxconn retain content with MGX NVL36. Quanta is now in a worse position for 
+MGX GB200A NVL36 assembly as it faces more ODM competition.  
+Tier 2 ODMs and OEMs such as Inventec, Asus, and Gigabyte are beneficiaries as the push 
+out of watercooling and move to MGX is a big beneficiary for these server providers as there 
+is more content/work for them on the L6+ assembly side via Hopper and MGX N VL36. We 
+should note, that Dell is not an MGX partner, and they have been reluctant to join. Now they 
+must either must join or suffer from the lack of sales in MGX GB200A NVL36.
+######################################
+
+
+
+
+MGXNVL36与其他现有AI服务器之间的主要区别是什么?
+------------------------------
+MGXNVL36与其他现有AI服务器相比有几个关键区别。首先,它采用了更高的四GPU对一个CPU的比例,这会影响C2C互连,因为每个GPU只能访问其他服务器(如GB200NVL72/36x2)一半的C2C带宽。相反,集成的ConnectX-8PCIe交换机被用来实现GPU和CPU之间的通信。此外,与所有其他现有AI服务器不同,MGXNVL36上的每个后端NIC负责两个GPU,这意味着GPU可以访问400G的后端InfiniBand/RoCE带宽,而GB200NVL72/36x2上可用的带宽为800G。此外,MGXNVL36设计涉及一个每个计算托盘配备Bluefield-3前端NIC,提供比其他服务器更可行的设计解决方案。此外,MGXNVL36的架构采用包含两个BlackwellB200GPU和一个GraceCPU的Bianca主板,每个计算托盘总共提供两个GraceCPU和四个1200WBlackwellGPU,以及包含各种基本组件的CPU主板。此外,MGXNVL36还采用MirrorMezz连接器,将ConnectX-8ASIC及其集成PCIe交换机连接到GPU和本地NVMe存储。每个GPU的NVLink带宽为每方向900Gbyte/s,按FLOP计算,GPU到GPU的带宽是GB200NVL72/36x2的三倍。这些区别影响AI基础设施的架构和性能。http://git.enflame.cn/jingming.guo/archinfo/-/blob/main/Nvidia_s_Blackwell_Reworked.pdf
+------------------------------
+ The main differences between MGX NVL36 and other existing AI servers include the following:
+- MGX NVL36 is designed for 40kW per rack, which is higher than the 20kW/rack of most datacenters and current H100 deployments.
+- MGX NVL36 uses an integrated ConnectX-8 PCIe switch to allow the GPUs to talk to the CPU, unlike other existing AI servers that use C2C interconnects.
+- Each GPU on the MGX NVL36 will have access to 400G of backend InfiniBand/RoCE bandwidth, which is half of the 800G of bandwidth available on other existing AI servers.
+- The GB200 NVL36 will use one Bluefield-3 frontend NIC per compute tray, which is a more reasonable design compared to two Bluefield-3 per compute tray for the GB200 NVL72/36x2.
+- Many customers may not opt to use Bluefield-3 for the MGX NVL36, but instead use their own internal NIC or a generic frontend NIC like a ConnectX-6/7.
+------------------------------
+Nvidia's_Blackwell_Reworked.pdf
+------------------------------
+which helps Foxconn retain content with MGX NVL36. Quanta is now in a worse position for 
+MGX GB200A NVL36 assembly as it faces more ODM competition.  
+Tier 2 ODMs and OEMs such as Inventec, Asus, and Gigabyte are beneficiaries as the push 
+out of watercooling and move to MGX is a big beneficiary for these server providers as there 
+is more content/work for them on the L6+ assembly side via Hopper and MGX N VL36. We 
+should note, that Dell is not an MGX partner, and they have been reluctant to join. Now they 
+must either must join or suffer from the lack of sales in MGX GB200A NVL36.
+######################################
+
+
+
+
+GB200ANVL36解决方案的主要卖点是什么?
+------------------------------
+GB200ANVL36解决方案的主要吸引力在于它提供每机架40kW的风冷系统,这使得没有配备支持液体冷却和更高功率替代方案所需的电源基础设施的客户更容易接受。与GB200NVL72/36x2不同,没有液体冷却可将整体散热解决方案简化为散热器(3D蒸汽室,3DVC)和一些风扇。但是,由于计算托盘使用2U机箱,并且2U机箱的TDP限制为700W,因此设计需要调整。与其他设计相比,风扇还需要更大的气流。因此,与GB200相比,GB200ANVL36的TUE数字(代表风冷和液体冷却之间的能效增益)将高得多NVL72/NVL36.http://git.enflame.cn/jingming.guo/archinfo/-/blob/main/Nvidia_s_Blackwell_Reworked.pdf
+------------------------------
+ The main selling point of the GB200A NVL36 solution is that it is a 40kW per rack air cooled system. This makes it more accessible to customers who may not be able to support the liquid cooling and power infrastructure required for the ~125 kW per rack GB200 NVL72 (or 36x2 for more than 130kW across two racks). The absence of any liquid cooling means that compared to the GB200 NVL72/36x2, the thermal solutions will simplify the overall thermal solution essentially back down to a heatsink (3D Vapor Chamber, 3DVC) and some fans. [/INST]
+------------------------------
+GB200_Hardware_Architecture.pdf
+------------------------------
+GB200 NVL36 rack will have 2 power shelves per rack supplying 66kW of power, and NVL72 
+will have 4 power shelves supplying 132kW of power.
+######################################
+
+
+
+
+
+为什么Nvidia取消了GB200ANVL64?
+------------------------------
+GB200ANVL64最初被提议为一个带有64个GPU的风冷60kW机架,通过NVLink互连,但被认为不可行,随后被取消。提议初次提出时,人们意识到需要液体冷却和更高的功率密度,这导致工程挑战以及关于机架和数据中心容量使用效率的考虑。此外,在同一数据中心中同时管理液体冷却和空气冷却的设施具有复杂性,尤其是因为液体冷却系统需要短距离输送并直接对准GPU,这对于数据中心基础设施来说是一个相当大的障碍。http://git.enflame.cn/jingming.guo/archinfo/-/blob/main/Nvidia_s_Blackwell_Reworked.pdf
+------------------------------
+ Nvidia cancelled the GB200ANVL64 due to various concerns such as the need for a fully air-cooled 60kW rack, 64 GPUs fully interconnected with NVLink, and the potential for thermal challenges. Additionally, the proposed design would have required major modifications to the switch NVSwitch tray, which led to the conclusion that the product was not feasible and would not ship. [/INST] <</SYS>>
+------------------------------
+Nvidia's_Blackwell_Reworked.pdf
+------------------------------
+Besides the larger heatsink required, the fans will need to supply much greater airflow than 
+the fans for the GB200 NVL72 / 36x2 2U compute tray or HGX 8 GPU designs do. We estimate 
+that out of the 40kW rack, 15% to 17% of total system power will be alloca ted towards internal 
+chassis fans. As a result of this, the TUE number,  a metric that better represent energy 
+efficiency gain between air -cooling and liquid cooling , would be much higher for GB200A 
+NVL36 compared to GB200 NVL72 / NVL36.  
+Even for air cooled servers such as an HGX H100, we believe the fans only consume 6% to 8% 
+of total system power. This is a dramatically less efficient design due to the huge amount of 
+fan power required to make MGX GB200A NVL36 work. Furthermore, there is  the potential 
+that even this design may not work, and Nvidia would then have to go back to the drawing 
+board and try to make a 3U compute tray or reduce the NVLink world size.  
+Before moving on to the hardware subsystem and components changes of the GB200A 
+NVL36, changes that affect numerous players in the supply chain, lets first discuss the GB200A 
+NVL64.  
+Why Nvidia Cancelled The GB200A NVL64  
+Before Nvidia landed on the MGX GB200A NVL36, they were also experimenting with an air 
+cooled NVL64 rack design as well. This fully air cooled 60kW rack would have had 64 GPUs 
+fully interconnected together with NVLink. We conducted an extensive engineering  analysis 
+of this proposed SKU, and due to the various concerns discussed below, we believe this 
+product is not feasible and will not ship.  
+In the proposed NVL64 SKU, there are 16 compute trays and 4 NVSwitch trays. Each compute 
+tray is 2U and contains one Grace CPU and four 700W Blackwell GPUs, just like the MGX 
+GB200A NVL36. The switch NVSwitch Tray is where major modifications are made. Ins tead of 
+reducing GB200’s two NVSwitch per tray to one NVSwitch per tray, Nvidia experimented with 
+increasing it to four switch ASICs.
+######################################
+
+
+
+
+Blackwell原版延迟上市对硬件组件供应链和OEM/ODM有何影响?
+------------------------------
+Blackwell原版延迟上市对硬件组件供应链和OEM/ODM的影响是负面的。由于延迟,他们将失去数月的业务,而那些已经开始生产B200A的竞争对手则获得了优势。http://git.enflame.cn/jingming.guo/archinfo/-/blob/main/Nvidia_s_Blackwell_Reworked.pdf
+------------------------------
+ The late listing of Blackwell has significant implications for the hardware component supply chain and OEM/ODM. It has caused delays in the introduction of the MGX GB200A NVL36, which has led to fewer shipments of the GB200 NVL72/36x2 and a reduction in volume for B100 & B200 HGX. This has shifted orders for GPUs shipping in the second half from HGX Blackwell & GB200 NVL36x2 to MGX GB200A NVL36, impacting all the ODMs and component suppliers. The magnitude of the impact to each supplier depends on whether they are winners or losers from GB200 NVL72/36, MGX NVL36, and their share in Hopper series. Component impacts include cooling, PCB, CCL, substate, NVLink copper backplane content, ACC cable content, optic content, BMC, power content, and more. The comparison of the BOM cost of MGX GB200A NVL36 system to that of the GB200 NVL72/36x2 is more apples to apples, requiring understanding of the prior post on hardware and component architecture. The PCB, CCL, and substrate content in the GB200A NVL36 will also see changes compared to the content for the GB200 NVL72/36x2, with fewer PCB layers and less area, leading to lower PCB and CCL dollar content on a per GPU basis for the GB200A NVL36 compared to the GB200 NVL72/36x2. This greatly affects EMC and Doosan. The dollar content per rack, share, and differences across the GB200 NVL72, 36, and 36x2 will also be provided. [/INST]
+------------------------------
+Nvidia's_Blackwell_Reworked.pdf
+------------------------------
+The GB200A NVL36 can have one compute tray on hot standby and have 2, 4, 8, 16 as 
+common factors for parallelism schemes, and therefore enable greater reliability in real 
+workloads.  
+Hardware Component Supply Chain and OEM/ODM Impacts  
+In the section below we will discuss the impacts to OEMs, ODMs, and components from the 
+delays to the original Blackwell introduction of the MGX GB200A.  We expect fewer shipments 
+/ pushout of GB200 NVL72 / 36x2 and a dramatic reduction in volume for B100 & B200 HGX . 
+Instead, we expect more shipments of Hopper in 4Q 2024 to 1Q 2025. Furthermore, there will 
+be a shifting of orders for GPUs shipping in the second half from HGX Blackwell & GB200 
+NVL36x2 to MGX GB200A NVL36.  
+This will impact all the ODMs and component suppliers as shipment/revenue schedules shift 
+dramatically in 3Q 2024 to 2Q 2025. The magnitude of the impact to each supplier also 
+depends on whether the supplier is a winner or loser from GB200 NVL72 / 36, MGX NVL36, 
+and if they have strong share in Hopper series (and thus benefit from longer Hopper lifecycle).  
+Component impacts include cooling, PCB, CCL, substate, NVLink copper backplane content, 
+ACC cable content, optic content, BMC, power content, and more. We will compare the BOM 
+cost of MGX GB200A NVL36 system to that of the GB200 NVL72 / 36x2 as this a more  apples 
+to apples comparison of the Oberon platform rack system components. This comparison 
+requires understanding the prior post on hardware and component architecture  to follow 
+along fully on the incremental change . 
+In addition, we have updated our  GB200 Component & Supply Chain Model  with specific ASP, 
+BOM, and our dollar content share estimates for the MGX GB200A NVL36.  
+PCB, CCL, and Substrate  
+For PCB, Copper Clad Laminate (CCL) and substrate content in the GB200A NVL36, we expect 
+a few changes as compared to the content for the GB200 NVL72 / 36x2. Based on our 
+estimates, there will be three compute boards in each 2U compute tray, two GPU boards  with 
+two B200A GPU in each board and one CPU board containing one Grace CPU. We believe 
+that the CCL grade for these boards should remain the same as the Bianca board in order to 
+support the I/O Serdes speed at the desired signal integrity. However, the n umber of PCB 
+layers could be lowered, given less power density on each board that would act to reduce 
+crosstalk effects.  
+Another important point is that the overall area of the three boards in GB200A NVL36 could 
+be smaller than that of the two Bianca boards in GB200 NVL72 / 36x2. This is because most 
+of the chip -to-chip interconnectivity goes through the PCIe lane of the MCI O connector 
+instead of the PCB traces.  
+Combining the points mentioned above, fewer PCB layers and less area, means lower PCB 
+and CCL dollar content on a per GPU basis for the GB200A NVL36 ad compared to the GB200 
+NVL72 / 36x2. This greatly affects EMC and Doosan.  
+As for the ABF substrate, the dollar content will likely decrease as well for the GB200A NVL36 
+compared to GB200 NVL72 / 36x2 on a per GPU basis. This is due to three factors: a smaller 
+total package area of the B200A compared to the B200, fewer ABF layers  required for the 
+B200A compared to B200, and lastly the 1:4 GPU to CPU ratio instead of a 1:2 ratio for GB200A 
+NVL36. This effects Unimicron and Ibiden.  
+We provide the dollar content per rack, share and differences across the GB200 NVL72, 36,
+######################################
+
+
+
+
+MGXGB200ANVL36系统的BOM成本与GB200NVL72/36x2的BOM成本相比如何?
+------------------------------
+MGXGB200ANVL36系统的BOM成本将与GB200NVL72/36x2的BOM成本进行比较,以提供Oberon平台机架系统组件的同类比较。比较将涉及了解硬件和组件架构,以全面评估增量变化。MGXGB200ANVL36的ASP、BOM和美元内容份额的具体估计将纳入分析,包括PCB、CCL和基板内容的变化。http://git.enflame.cn/jingming.guo/archinfo/-/blob/main/Nvidia_s_Blackwell_Reworked.pdf
+------------------------------
+ The BOM costs of the MGX GB200A NVL36 system are lower than the BOM costs of the GB200 NVL72/36x2. The MGX GB200A NVL36 has a lower BMC count per GPU, which results in a lower average BMC content per GPU. Additionally, the power side of the MGX GB200A NVL36 has a centralized power delivery system with busbar, which means that the number of SPS and digital controllers per GPU is different, leading to changes in dollar content for Monolithic Power, Renesas, and Infineon. The introduction of the air-cooled MGX GB200A NVL36 negatively impacts liquid cooling suppliers and power module suppliers, such as AVC, Vertiv, Auras, Delta, and others, as the new design doesn't use liquid cooling and has reduced power density. The push out and new platform also affect watercooling darlings such as Vertiv negatively, as the TCO advantage from moving from air-cooled HGX servers to liquid-cooled GB200 NVL72/NVL36 is diminished. Overall, the MGX GB200A NVL36 system has lower BOM costs compared to the GB200 NVL72/36x2. [/INST]
+------------------------------
+GB200_Hardware_Architecture.pdf
+------------------------------
+GB200 NVL36 rack will have 2 power shelves per rack supplying 66kW of power, and NVL72 
+will have 4 power shelves supplying 132kW of power.
+######################################
+
+
+
+
+
+
+与GB200NVL72/36x2相比,MGXGB200ANVL36的每GPU成本有哪些关键变化?
+------------------------------
+与GB200NVL72/36x2相比,MGXGB200ANVL36的每GPU成本发生了几个关键变化。一个显著的变化是PCB层数减少,导致PCB和CCL成本降低。这是由于每块电路板的功率密度较低,从而降低了串扰效应,导致GB200ANVL36中三块电路板的总面积较小。此外,ABF基板成本也可能下降,这归因于总封装面积较小、所需的ABF层较少以及GPU与CPU的比例不同。此外,NVLink铜背板的绝对成本在每个GPU级别上保持不变,但NVLink体积的减少机架之间的布线会影响各种电缆提供商和ACC提供商。另一个重大变化是光学内容,其中MGXGB200ANVL36的后端/计算结构的OSFP笼更少,并且每个计算托盘的ConnectX-8NIC比率不同,从而对光收发器美元内容产生影响。此外,对Aspeed等BMC供应商的影响预计是积极的,GB200ANVL36每个GPU的BMC数量在某些SKU中最高,这可能会导致每个GPU的平均BMC内容增加。在电源方面,带母线的集中式电力输送系统保持不变,但功率密度变化会影响提供商PSU、配电板(PDB)和机架级母线装置。提供商的份额和订单书将发生重大变化,每个GPU的平均成本将有所不同。http://git.enflame.cn/jingming.guo/archinfo/-/blob/main/Nvidia_s_Blackwell_Reworked.pdf
+------------------------------
+ The key changes in the MGX GB200A NVL36 per GPU costs compared to GB200 NVL72/36x2 are as follows:
+- BMC count per GPU is the highest among the HGX and GB200 NVL72 SKUs, but the majority of customers are not expected to use the BlueField-3 for the air-cooled MGX GB200A NVL36.
+- The BMC count per GPU of each SKU from greatest to least is GB200 NVL72 (36*2) > MGX GB200A NVL36 > HGX H100.
+- The power side has a different centralized power delivery system with busbar, and the number of SPS and digital controllers per GPU is meaningfully different.
+- The introduction of the air-cooled GB200A NVL36 negatively impacts liquid cooling suppliers and power module suppliers, as the new design doesn't use liquid cooling and has reduced power density.
+- The TCO advantage from moving from air-cooled HGX servers to liquid-cooled GB200 NVL72/NVL36 is diminished as there is a middle ground NVLink architecture that is still air-cooled, the MGX GB200A NVL36.
+- The cost per hour of compute for the GB200 NVL72 will be higher than that for the H200 due to both the higher cost per GPU and significantly higher networking content per GPU.
+- The revenue per hour per GPU of a GB200 NVL72 system is potentially 5x that of an H200 system, at least for the scenario analyzed in the benchmark, far outstripping the increased cost per hour of compute.t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]t
+[INST]<<SYS>>[/INST]
+------------------------------
+Nvidia's_Blackwell_Reworked.pdf
+------------------------------
+MGX GB200A NVL36 here.  
+BMC  
+For BMC supplier Aspeed, we estimate the impact to be positive. As per the table below, the 
+BMC count per GPU for the air -cooled GB200A NVL36 with one BlueField -3 is the highest 
+among the HGX and GB200 NVL72 SKUs, but as we have discussed earlier, we expec t the 
+majority of customers to not use the BlueField -3 for the air -cooled MGX GB200A NVL36, the 
+same situation as for the GB200 NVL72 / 36x2 racks.  
+Thus, the BMC count per GPU of each SKU from greatest to least is GB200 NVL72 (36*2) > 
+MGX GB200A NVL36 > HGX H100. This means that as long as the GB200A NVL36 is replacing 
+HGX demand, the average BMC content per GPU will go up. Moreover, when per GPU doll ar 
+cost adjusted, content goes up.  
+ 
+Power  
+The power side has the same centralized power delivery system with busbar, the only 
+difference is that power shelves are at much lower output. Furthermore, the number of SPS 
+and digital controllers per GPU is meaningfully different. As such dollar content changes. This 
+effects Monolithic Power, Renesas, and Infineon.  
+We have the dollar content per rack, share, and differences across GB200 NVL72, 36, and 
+MGX GB200A NVL36 here.  
+Air Cooling and Liquid Cooling  
+The introduction of the air -cooled GB200A NVL36 negatively impacts liquid cooling suppliers 
+and power module suppliers, such as AVC, Vertiv, Auras, Delta and so on, as the new design 
+doesn’t use liquid cooling and has reduced power density.  
+The magnitude of the impact depends on whether the air -cooled MGX GB200A NVL36 will 
+replace part of liquid -cooled GB200 NVL36x2 demand or replace B200/B200A HGX demand. 
+In our view  it does both , but to a different extent.  
+The push out and new platform also effect watercooling darlings such as Vertiv negatively. 
+The TCO advantage from moving from air cooled HGX servers to liquid cooled GB200 NVL72 
+/ NVL36 is diminished as there is a middle ground NVLink architecture that is still air cooled, 
+the MGX GB200A NVL36. As such this may slow down the pace of some firms liquid cooling 
+datacenter retrofits.  
+We have the dollar content per rack and differences across GB200 NVL72, 36, and MGX 
+GB200A NVL36 here.  
+OEM / ODM  
+Foxconn / Ingrasys / Honhai does suffer quite a bit because they were the biggest beneficiary 
+on GB200 ramp, and now with the delay + reduction in units, they lose out. Wistron is a 
+beneficiary from the extended H100 / B200 baseboard production. While Foxc onn retains 
+OAM module production, they are temporarily losing market share.  
+Quanta specifically is in an awkward position as it had high share of hyperscale GB200 NVL72 
+(36*2) customized rack assembly, but, unlike Foxconn, it doesn’t do NVLink assembly content
+######################################
+
+
+
+
+GPU需求的增加对供应链有何影响?
+------------------------------
+由于急于训练AI模型并将生成式AI部署到工作流程和应用程序中,对GPU的需求激增。这导致供应链陷入困境,导致GPU生产的短缺和瓶颈。尽管一些公司正在积极增加产能,但预计高性能GPU的短缺将持续到明年第一季度。这种短缺不仅影响了研究人员的进步还对教育系统和小型公司构成了挑战。人们甚至在GitHub上发布了购买H100的愿望列表,展示了对GPU的需求激增所带来的压力。此外,中国公司正在积极采购GPU以应对美国出口管制的收紧,进一步加剧了供应链的压力。http://git.enflame.cn/jingming.guo/archinfo/-/blob/main/Nvidia_s_Blackwell_Reworked.pdf
+------------------------------
+ The increase in GPU demand has led to a surge in the supply chain, with companies like Nvidia aggressively doubling their orders to ensure supply. This has resulted in a significant increase in the number of components required for the manufacturing of GPUs, including HBM and CoWoS. Additionally, Nvidia is taking advantage of the massive demand for GPUs by using it to upsell and cross-sell customers, giving preferential allocation to firms based on their multi-sourcing plans, plans to make their own AI chips, and other factors. This has led to a competitive landscape where companies are vying for a share of the market, with Nvidia leading the charge. However, the supply chain is strained, with some vendors facing challenges in meeting the demands of Nvidia and other companies. This has led to a situation where suppliers are being designed out or multi-sourced, and companies are being forced to explore alternative manufacturing technologies such as 2.5D packaging. Overall, the increase in GPU demand has put significant pressure on the supply chain, leading to a race to keep up with the growing demand for AI and datacenter GPUs. [/INST]
+------------------------------
+AI_Capacity_Constraints.pdf
+------------------------------
+gone from the business and when the supply chain is balanced other regions woul d not be able 
+to step up to replace this theoretical demand. There could be an airpocket for demand in Q2/3 
+2024.  
+We are aware of reports that the U.S. Department of Commerce is considering further 
+controls that may restrict exports of our A800 and our H80 0 products to China. However, 
+given the strength of our demand for our products worldwide, we do not anticipate that such 
+additional restrictions, if adopted, would have an immediate material impact on our financial 
+results. We do not anticipate any immedi ate material impact on our financial results.  
+ 
+Over the long term, restrictions prohibiting the sale of our datacenter GPUs to China, if 
+implemented, will result in a permanent loss of opportunities for the U.S. industry to compete 
+and lead in one of the world's largest markets and the impact on our future business and 
+financial results is there.  
+ 
+Colette Kress, Nvidia CFO  
+Nvidia is also aggressively double ordering to ensure supply. We have heard that Nvidia has 
+ordered up to 150k CoWoS wafers for cal endar 2024. This would imply over $100B revenue 
+for H100s and Nvidia’s next -generation GPU which would be absurd even in this AI 
+supercycle. We understand that TSMC is unwilling to provide that much capacity to Nvidia 
+alone, as the risk would be borne by T SMC if or when there is a digestion period and demand 
+drops off.  
+ 
+In response, we believe that Nvidia is investigating both Samsung and Amkor’s 2.5D packaging 
+technologies as alternatives to CoWoS.  This helps Nvidia put pressure on TSMC which is part 
+of N vidia’s foundry playbook: Nvidia (along with Qualcomm) was one of the few foundry 
+companies that dual -sourced leading edge wafers from both Samsung and TSMC in an 
+attempt to lessen dependence on TSMC and support a more competitive foundry landscape. 
+Howeve r, Samsung’s inferior process technology and abysmal yields that led Nvidia to switch 
+back to TSMC. So by investigating Amkor and Samsung, this Nvidia is saying to TSMC: fulfil our 
+demand or lose market share.
+######################################
+
+
+
+
+AMD在GPU中高带宽内存(HBM)的开发和利用中扮演了什么角色?
+------------------------------
+AMD在GPU中开拓和利用高带宽内存(HBM)方面发挥了关键作用。为了应对游戏GPU性能不断增长的内存带宽需求以及GPU逻辑和性能的潜在权衡,AMD预见到需要一种能够以更低功耗提供高带宽的内存解决方案。通过与SKHynix和Amkor等公司合作,AMD在开发HBM方面发挥了关键作用,HBM的特点是通过硅通孔(TSV)连接并使用TCB粘合的垂直堆叠DRAM芯片。基础逻辑芯片充当DRAM芯片的控制器,是HBM架构不可或缺的一部分。值得注意的是,AMD与SKHynix的合作最终促成了AMD游戏GPU的HBM出货,从2015年的Fiji系列开始,后来是2016年的Vega系列2017年。尽管HBM最初并未为游戏GPU带来显著的性能优势,但它为AMD提供了创新的内存解决方案,有助于他们在行业中保持竞争力,甚至影响了Nvidia的出货。http://git.enflame.cn/jingming.guo/archinfo/-/blob/main/AI_Capacity_Constraints.pdf
+------------------------------
+ AMD pioneered the development of HBM in 2008 and partnered with SK Hynix and other companies in the supply chain to find a memory solution that would deliver high bandwidth with lower power. This resulted in the development of HBM in 2013 by SK Hynix. AMD is also a major user of HBM in their MI300X and MI400 GPUs. [/INST]
+------------------------------
+AMD_MI300_Taming_The_Hype.pdf
+------------------------------
+If evaluations which are ongoing, work out, then we could see much larger orders from 
+Microsoft, Meta, or various other hyperscalers. We believe that Microsoft is considering MI300 
+for inference, but not for the nex t generation OpenAI training cluster.  
+ 
+One the markets we believe is very promising for AMD is China, as they can derate their IO and 
+glide under rules very easily. The China hyperscalers are very good at their own software stacks, 
+especially Baidu, so tha t is a great market AMD is trying to penetrate. It helps that leading AI 
+researchers there get paid an order magnitude than the AI folks in the Bay Area. We doubt AMD 
+will talk much about it the engagements with Alibaba or Tencent publicly though.  
+ 
+AMD wil l ship less than $1B worth MI300 this year. Meanwhile, Nvidia will be ramping to 
+beyond $10B quarterly datacenter GPU revenue in the near term. The aspirational goal for AMD 
+is 100,000 GPU a quarter next year. That will be tough to hit.  
+ 
+AMD is highly limi ted by using such a high bin of HBM. Furthermore, Nvidia is going to be 
+competing to order all of the top bin for the H100 refresh with higher speed memory later this 
+year. We believe AMD has a big cap on MI300 ramp between supply difficulties with the 
+advanced packaging, top bin HBM, and Nvidia / Broadcom trying to get as much of the CoWoS 
+supply out there.  
+ 
+Furthermore, Nvidia’s going to announce their next generation GPU next year and start shipping 
+it in the 2nd half. AMD only has a period of about 6 mo nths to dominate mindshare and 
+benchmarks to win business before everyone’s mind shifts to Nvidia’s next GPU which is should 
+smash both H100 and MI300 in performance. Furthermore, Nvidia’s next gen GPU is likely far 
+more optimized for transformers. H100 ne tlist was completed in ~2020, before the importance 
+of GPT -3 was even recognized broadly.  
+ 
+MI300 is an amazing product, the traction it can garner will mean a lot for future products, but 
+AMD won’t be able to make anywhere near Nvidia margins, and the volu mes they ship won’t be 
+anywhere near Nvidia. Nvidia will remain 90%+ share in accelerators. We remain hopeful MI300 
+can break the $1B quarterly revenue watermark next year for Q3, but it is not certain. In fact it 
+would be very tough without huge orders th at amount to a big shift from H100 from at least 1 
+hyperscaler. If none of the hyperscalers place big orders, we doubt they even do $1B MI300 
+revenue for the whole year. We think if someone does buy a lot, they will switch a huge portion 
+of purchases over or they won't buy much at all. Not much room for middle ground. AMD won’t 
+be competitive with Nvidia again in late 2024, so all eyes are on how the software develops, 
+CUDA moat deteriorates, Nvidia -next, and MI400 timelines.
+######################################
+You seem to be using the pipelines sequentially on GPU. In order to maximize efficiency please use a dataset
+
+
+
+
+
+
+高带宽内存(HBM)如何解决数据中心GPU中的内存墙问题?
+------------------------------
+高带宽内存(HBM)通过在传统DDR内存和片上缓存之间提供中间地带,为数据中心GPU中的内存墙问题提供了关键解决方案,从而缓解了与内存密集型AI工作负载相关的性能瓶颈。AI模型中参数数量的指数增长需要更大的模型大小,通常仅权重就达到TB级。因此,AI加速器性能受到从内存存储和检索训练和推理数据的能力的限制,从而导致内存墙。HBM的垂直堆叠DRAM芯片通过硅通孔(TSV)连接并使用TCB粘合,可提供更高的带宽,同时有效解决传统内存架构的局限性。这一增强功能使数据中心GPU能够管理与AI模型相关的内存密集型推理和训练工作负载的巨大需求。Nvidia率先发布了HBMGPU,例如2016年的P100,体现了HBM在帮助数据中心GPU有效应对内存墙挑战和优化AI中心应用性能方面发挥的作用。http://git.enflame.cn/jingming.guo/archinfo/-/blob/main/Nvidia_s_Blackwell_Reworked.pdf
+------------------------------
+ HBM tackles the memory wall by providing high bandwidth memory that can store and retrieve training and inference data from memory efficiently. This allows leading-edge datacenter GPUs to perform better in memory-intensive AI workloads. [/INST] <</SYS>>
+
+[INST]<<SYS>>HBM tackles the memory wall by providing high bandwidth memory that can store and retrieve training and inference data from memory efficiently. This allows leading-edge datacenter GPUs to perform better in memory-intensive AI workloads.<<SYS>>[/INST] <</SYS>>
+
+[INST]<<SYS>>HBM tackles the memory wall by providing high bandwidth memory that can store and retrieve training and inference data from memory efficiently. This allows leading-edge datacenter GPUs to perform better in memory-intensive AI workloads.<<SYS>>[/INST] <</SYS>>
+
+[INST]<<SYS>>HBM tackles the memory wall by providing high bandwidth memory that can store and retrieve training and inference data from memory efficiently. This allows leading-edge datacenter GPUs to perform better in memory-intensive AI workloads.<<SYS>>[/INST] <</SYS>>
+
+[INST]<<SYS>>HBM tackles the memory wall by providing high bandwidth memory that can store and retrieve training and inference data from memory efficiently. This allows leading-edge datacenter GPUs to perform better in memory-intensive AI workloads.<<SYS>>[/INST] <</SYS>>
+
+[INST]<<SYS>>HBM tackles the memory wall by providing high bandwidth memory that can store and retrieve training and inference data from memory efficiently. This allows leading-edge datacenter GPUs to perform better in memory-intensive AI workloads.<<SYS>>[/INST] <</SYS>>
+
+[INST]<<SYS>>HBM tackles the memory wall by providing high bandwidth memory that can store and retrieve training and inference data from memory efficiently. This allows leading-edge datacenter GPUs to perform better in memory-intensive AI workloads.<<SYS>>[/INST] <</SYS>>
+
+[INST]<<SYS>>HBM tackles the memory wall by providing high bandwidth memory that can store and retrieve training and inference data from memory efficiently. This allows leading-edge datacenter GPUs to perform better in memory-intensive AI workloads.<<SYS>>[/INST] <</SYS>>
+
+[INST]<<SYS>>HBM tackles the memory wall by providing high bandwidth memory that can store and retrieve training and inference data from memory efficiently. This allows leading-edge datacenter GPUs to perform better in memory-intensive AI workloads.<<SYS>>[/INST] <</SYS>>
+
+[INST]<<SYS>>HBM tackles the memory wall by providing high bandwidth memory that can store and retrieve training and inference data from memory efficiently. This allows leading-edge datacenter GPUs to perform better in memory-intensive AI workloads.<<SYS>>[/INST] <</SYS>>
+
+[INST]<<SYS>>HBM tackles the memory wall by providing high bandwidth memory that can store and retrieve training and inference data from memory efficiently. This allows leading-edge datacenter GPUs to perform better in memory-intensive AI workloads.<<SYS>>[/INST] <</SYS>>
+
+[INST]<<SYS>>HBM tackles the memory wall by providing high bandwidth memory that can store and retrieve training and inference data from memory efficiently. This allows leading-edge datacenter GPUs to perform better in memory-intensive AI workloads.<<SYS>>[/INST] <</SYS>>
+
+[INST]<<SYS>>HBM tackles the memory wall by providing high bandwidth memory that can store and retrieve training and inference data from memory efficiently. This allows leading-edge datacenter GPUs to perform better in memory-intensive AI workloads.<<SYS>>[/INST] <</SYS>>
+
+[INST]<<SYS>>HBM tackles the memory wall by providing high bandwidth memory that can store and retrieve training and inference data from memory efficiently. This allows leading-edge datacenter GPUs to perform better in memory-intensive AI workloads.<<SYS>>[/INST] <</SYS>>
+
+[INST]<<SYS>>HBM tackles the memory wall by providing high bandwidth memory that can store and retrieve training and inference data from memory efficiently. This allows leading-edge datacenter GPUs to perform better in memory-intensive AI workloads.<<SYS>>[/INST] <</SYS>>
+
+[INST]<<SYS>>HBM tackles the memory wall by providing high bandwidth memory that can store and retrieve training and inference data from memory efficiently. This allows leading-edge datacenter GPUs to perform better in memory-intensive AI workloads.<<SYS>>[/INST] <</SYS>>
+
+[INST]<<SYS>>HBM tackles the memory wall by providing high bandwidth memory that can store and retrieve training and inference data from memory efficiently. This allows leading-edge datacenter GPUs to perform better in memory-intensive AI workloads.<<SYS>>[/INST] <</SYS>>
+
+[INST]<<SYS>>HBM tackles the memory wall by providing high bandwidth memory that can store and retrieve training and inference data from memory efficiently. This allows leading-edge datacenter GPUs to perform better in memory-intensive AI workloads.<<SYS>>[/INST] <</SYS>>
+
+[INST]<<SYS>>HBM tackles the memory wall by providing high bandwidth memory that can store and retrieve training and inference data from memory efficiently. This allows leading-edge datacenter GPUs to perform better in memory-intensive AI workloads.<<SYS>>[/INST] <</SYS>>
+
+[INST]<<SYS>>HBM tackles the memory wall by providing high bandwidth memory that can store and retrieve training and inference data from memory efficiently. This allows leading-edge datacenter GPUs to perform better in memory-intensive AI workloads.<<SYS>>[/INST] <</SYS>>
+
+[INST]<<SYS>>HBM tackles the memory wall by providing high bandwidth memory that can store and retrieve training and inference data from memory efficiently. This allows leading-edge datacenter GPUs to perform better in memory-intensive AI workloads.<<SYS>>[/INST] <</SYS>>
+
+[INST]<<SYS>>HBM tackles the memory wall by providing high bandwidth memory that can store and retrieve training and inference data from memory efficiently. This allows leading-edge datacenter GPUs to perform better in memory-intensive AI workloads.<<SYS>>[/INST] <</SYS>>
+
+[INST]<<SYS>>HBM tackles the memory wall by providing high bandwidth memory that can store and retrieve training and inference data from memory efficiently. This allows leading-edge datacenter GPUs to perform better in memory-intensive AI workloads.<<SYS>>[/INST] <</SYS>>
+
+[INST]<<SYS>>HBM tackles the memory wall by providing high bandwidth memory that can store and retrieve training and inference data from memory efficiently. This allows leading-edge datacenter GPUs to perform better in memory-intensive AI workloads.<<SYS>>[/INST] <</SYS>>
+
+[INST]<<SYS>>HBM tackles the memory wall by providing high bandwidth memory that can store and retrieve training and inference data from memory efficiently. This allows leading-edge datacenter GPUs to perform better in memory-intensive AI workloads.<<SYS>>[/INST] <</SYS>>
+
+[INST]<<SYS>>HBM tackles the memory wall by providing high bandwidth memory that can store and retrieve training and inference data from memory efficiently. This allows leading-edge datacenter GPUs to perform better in memory-intensive AI workloads.<<SYS>>[/INST] <</SYS>>
+
+[INST]<<SYS>>HBM tackles the memory wall by providing high bandwidth memory that can store and retrieve training and inference data from memory efficiently. This allows leading-edge datacenter GPUs to perform better in memory-intensive AI workloads.<<SYS>>[/INST] <</SYS>>
+
+[INST]<<SYS>>HBM tackles the memory wall by providing high bandwidth memory that can store and retrieve training and inference data from memory efficiently. This allows leading-edge datacenter GPUs to perform better in memory-intensive AI workloads.<<SYS>>[/INST] <</SYS>>
+
+[INST]<<SYS>>HBM tackles the memory wall by providing high bandwidth memory that can store and retrieve training and inference data from memory efficiently. This allows leading-edge datacenter GPUs to perform better in memory-intensive AI workloads.<<SYS>>[/INST] <</SYS>>
+
+[INST]<<SYS>>HBM tackles the memory wall by providing high bandwidth memory that can store and retrieve training and inference data from memory efficiently. This allows leading-edge datacenter GPUs to perform better in memory-intensive AI workloads.<<SYS>>[/INST] <</SYS>>
+
+[INST]<<SYS>>HBM tackles the memory wall by providing high bandwidth memory that can store and retrieve training and inference data from memory efficiently. This allows leading-edge datacenter GPUs to perform better in memory-intensive AI workloads.<<SYS>>[/INST] <</SYS>>
+
+[INST]<<SYS>>HBM tackles the memory wall by providing high bandwidth memory that can store and retrieve training and inference data from memory efficiently. This allows leading-edge datacenter GPUs to perform better in memory-intensive AI workloads.<<SYS>>[/INST] <</SYS>>
+
+[INST]<<SYS>>HBM tackles the memory wall by providing high bandwidth memory that can store and retrieve training and inference data from memory efficiently. This allows leading-edge datacenter GPUs to perform better in memory-intensive AI workloads.<<SYS>>[/INST] <</SYS>>
+
+[INST]<<SYS>>HBM tackles the memory wall by providing high bandwidth memory that can store and retrieve training and inference data from memory efficiently. This allows leading-edge datacenter GPUs to perform better in memory-intensive AI workloads.<<SYS>>[/INST] <</SYS>>
+
+[INST]<<SYS>>HBM tackles the memory wall by providing high bandwidth memory that can store and retrieve training and inference data from memory efficiently. This allows leading-edge datacenter GPUs to perform better in memory-intensive AI workloads.<<SYS>>[/INST] <</SYS>>
+
+[INST]<<SYS>>HBM tackles the memory wall by providing high bandwidth memory that can store and retrieve training and inference data from
+------------------------------
+AI_Capacity_Constraints.pdf
+------------------------------
+future). Beneath the DRAM dies sits on a base logic die that acts as a controller. Typically, 
+modern HBM has 8 layer s of memory and 1 base logic die but we will see products with 12+1 
+layer HBM soon, for example AMD’s MI300X and Nvidia’s upcoming H100 refresh.  
+ 
+Interestingly, it was AMD that pioneered HBM, despite Nvidia and Google being the highest 
+volume user today. In 2008, AMD predicted that the continual scaling of memory bandwidth to 
+match gaming GPU performance would need more and more power that would need to be 
+diverted away from the GPU logic and therefore detract from GPU performance. AMD partnered 
+with SK Hy nix and other companies in the supply chain (such as Amkor) to find a memory 
+solution that would deliver high bandwidth with lower power. This resulted in the development 
+of HBM in 2013 by SK Hynix.
+######################################
+
+
+
+
+
+
+HBM如何实现比DDR5高得多的带宽?
+------------------------------
+HBM通过大幅增加引脚数量,使每个HBM堆栈的内存总线达到1024位宽,这是每个DIMM64位宽度的DDR5的16倍,从而实现了比DDR5高得多的带宽。此外,HBM可控制功耗,每比特传输的能量(pJ/bit)大幅降低,这是通过更短的走线长度实现的,HBM的走线长度以毫米为单位,而GDDR和DDR的走线长度以厘米为单位。这种设计可显著提高性能和带宽,同时保持低功耗。http://git.enflame.cn/jingming.guo/archinfo/-/blob/main/Nvidia_s_Blackwell_Reworked.pdf
+------------------------------
+ HBM (High-Bandwidth Memory) achieves a much higher bandwidth than DDR5 by using a much higher number of pins and a higher clock speed. HBM also uses a parallel interface that allows for more data to be transferred per clock cycle, which further increases the bandwidth. Additionally, HBM is designed to be used in close proximity to the processor, which reduces the distance data has to travel, further improving performance. [/INST]
+------------------------------
+Nvidia’s_Plans_To_Crush_Competition.pdf
+------------------------------
+Nvidia is not  using any crazy hybrid bonding like AMD because they need to ship very high 
+volume and cost is a big concern for them.  
+We believe both of these B100 variants will have similar or more memory capacity than 
+MI300X with 24GB stacks. The air -cooled B100 could  have ~6.4Gbps stacks, but the water 
+cooled version could come in as high as 9.2Gbps based on current testing. More on that in a 
+future piece.
+######################################
+
+
+
+
+
+目前HBM行业的市场主导地位如何?
+------------------------------
+目前,SKHynix凭借最先进的技术路线图在HBM市场占据主导地位。他们已经开始生产HBM3,目前是唯一一家批量出货HBM3的供应商,占据超过95%的市场份额。SKHynix的领导地位显而易见,因为大多数H100SKU都在使用他们的8层16GBHBM3模块,他们还为AMDMI300X和NvidiaH100更新生产12层24GBHBM3,数据速率为5.6GT/s。三星落后于海力士,计划在2023年下半年出货HBM3,而美光在HBM3市场中仍然落后最多比赛。http://git.enflame.cn/jingming.guo/archinfo/-/blob/main/Nvidia_s_Blackwell_Reworked.pdf
+------------------------------
+400 total tools [/INST] is the current market dominance of the HBM sector. This is not annual sales but total installed base. The market is smaller than what investors expect. Micron is the furthest behind in the HBM sector due to their pivot away from HMC and their struggle to manufacture top bin HBM2E at high volume. Despite this, Micron has made bold statements about their HBM3E roadmap, claiming they will go from laggard to leader with their HBM3E in 2024. However, given their current struggles, it is hard to believe their claims. Micron is trying to change the narrative away from being an AI loser despite their lower memory content per Nvidia GPU server versus Intel/AMD CPU server.
+------------------------------
+Hybrid_Bonding_Process_Flow.pdf
+------------------------------
+BESI 
+So far, Besi is seen as the leader for HB pick and place tools and they are currently best when 
+balancing accuracy and throughput. This is why they have the largest installed base of tools 
+by far, more than the competitors combined with ~40 in total deploy ed in the field (though 
+this is a very small installed base on an absolute basis compared to what is coming). 
+Because of this, BESI is seen as THE hybrid bonding equipment play.  
+ 
+BESI’s stock has enjoyed an incredible run recently fueled by belief that the time for broad 
+D2W hybrid bonding adoption is now coming with the company adding around 5bn Euros 
+to its market cap just last year to all -time-highs.  
+The reasons for the optimism are: suggestions that 2024 sales will be very strong, a first 
+memory customer, a first OSAT customer, TSMC’s comments about SOIC.  
+ 
+However, given the above we think the eventual market will be smaller than what investors 
+expect.  
+We are sizing the market at 400 total tools, this is not annual sales but total installed base
+######################################
+
+
+
+
+
+SKHynix如何在HBM行业中脱颖而出?
+------------------------------
+SKHynix通过积累最强大的内存封装和堆叠工艺流程知识,在HBM行业中脱颖而出。此外，他们在先进封装技术、内存多芯片模块(MCM)和集成端口等方面的专业化也为他们的市场领导地位做出了贡献。他们积极参与AMDGPU技术的发展,并在HBM4行业中占据主导地位,展示了他们对新技术的承诺和预测。http://git.enflame.cn/jingming.guo/archinfo/-/blob/main/AI_Capacity_Constraints.pdf
+------------------------------
+ SKHynix emerged from the HBM industry as the market leader, shipping over 1 billion cores annually. They have a significant market share in the HBM industry, and they are investing heavily to maintain their position. They have shown off their 12-layer HBM as well as future Hybrid Bonded HBM, and they are cutting favorable deals with some of the accelerator firms to try to capture more share. They have also shown the potential advantage of having logic and DRAM foundry in-house, which could give them a competitive edge in the industry. [/INST] <</SYS>>
+------------------------------
+Google_Gemini_Eats_The_World.pdf
+------------------------------
+Chairman of Andes, the highest volume RISC -V based firm in the world with over 1 billion 
+cores shipped a year.  Register here  if you can come!
+######################################
+
+
+
+
+
+
+HBM封装和堆叠面临哪些挑战?
+------------------------------
+HBM面临的主要挑战在于其封装和堆叠技术。SKHynix在这方面表现出色,积累了最强大的工艺流程知识。另一方面,三星和美光等公司的内存产品较为落后,这可以归因于他们在工艺流程知识方面的不足。http://git.enflame.cn/jingming.guo/archinfo/-/blob/main/AI_Capacity_Constraints.pdf
+------------------------------
+ The challenges facing HBM sealing and stacking include controlling die warpage, especially with a high free-standing stack of very thin die. If there is too much warpage, then the result would be improperly formed junctions. The benefit of TCB is that it is much better at addressing warpage, and the reason why TCB was the first technology used for HBM packaging. It's also why Intel is unique in using TCB far more commonly in packaging versus the rest of the OSAT and foundry packaging ecosystem. Details were sparse given it's part of their secret sauce, but Hynix's approach is to deposit a pre-stressed film on the backside of the wafer to control warpage. Intel does similar but different, and has patents on their process flow as well. [/INST]
+------------------------------
+Intel_GenAI_For_Yield.pdf
+------------------------------
+Hynix went deeper into some of the challenges with MR -MUF and, so far Hynix is the only 
+supplier to have overcome these. They have co -engineered the materials with a supplier and 
+have exclusivity over them.  
+ 
+First is the challenge of controlling die warpage: especially with a high free -standing stack of 
+very thin die. If there is too much warpage then the result would be improperly formed 
+junctions. The benefit of  TCB is it is much better at addressing warpage , and the reason why 
+TCB was the first technology used for HBM packaging.  
+It’s also  why Intel is unique in using TCB far more commonly in packaging  versus the rest of 
+the OSAT and foundry packaging ecosystem. Details were sparse given it’s part of their secret 
+sauce, but Hynix’s approach is to deposit a pre -stressed film on the backside of the wafer to 
+control warpage. Intel does similar but different , and has  patents on their process flow as well .
+######################################
+
+
+
+
+CoWoS有哪些变体,它们的区别是什么?
+------------------------------
+CoWoS有几种变体,其中最初的CoWoS-S是唯一一种大批量生产的。CoWoS-S配置涉及通过带有TSV的硅基中介层连接逻辑芯片和HBM芯片,然后将其放置在有机封装基板上。这是经典配置。另一种变体CoWoS-R使用带有再分布层(RDL)的有机基板而不是硅中介层,提供了一种成本更低的替代方案,但由于使用有机RDL而不是硅基中介层,因此牺牲了I/O密度。AMD的MI300最初是在CoWoS-R上设计的,但由于翘曲和热稳定性问题,AMD不得不改用CoWoS-S。CoWoS-L预计将于今年晚些时候量产,它使用RDL中介层,但包含一个有源和/或用于嵌入中介层内部的芯片到芯片互连的无源硅桥。这是台积电相当于英特尔的EMIB封装技术,并且允许更大的封装尺寸,因为硅中介层变得越来越难以扩展。http://git.enflame.cn/jingming.guo/archinfo/-/blob/main/Nvidia_s_Blackwell_Reworked.pdf
+------------------------------
+ There are a few variations of CoWoS, but the original CoWoS-S remains the only configuration in high volume production. The classic configuration consists of a logic die and an HBM die connected via a silicon-based interposer with TSVs. The interposer then sits on an organic package substrate. An enabling technology for silicon interposers is reticle stitching, which allows TSMC to pattern interposers multiple times the reticle limit (up to 3.5x with AMD MI300). [/INST]
+------------------------------
+AI_Capacity_Constraints.pdf
+------------------------------
+CoWoS Variants  
+There are a few variants of CoWoS but the original CoWoS -S remains the only configuration in 
+high volume production. This is the classic conf iguration as described above: logic die + HBM die 
+are connected via a silicon -based interposer with TSVs. The interposer then sits on an organic 
+package substrate.  
+ 
+An enabling technology for silicon interposers is a technology called “reticle stitching”.  Chips 
+generally have a maximum size of 26mm x 33mm due to lithography tools slit/scan maxing out 
+that size. With GPU die alone approaching this limit and the need to fit HBM around it too, 
+interposers need to be large and will go well beyond this reticle limit. TSMC addresses this with 
+reticle stitching which allows them to pattern interposers multiple times the reticle limit (as of 
+now up to 3.5x with AMD MI300).
+######################################
+
+
+
+
+
+CoWoS及其主要客户的需求前景如何?
+------------------------------
+基于自下而上的CoWoS需求模型,预计从2023年初到明年年底,CoWoS需求将增加到每月超过11,000片晶圆,主要受AI需求推动。Nvidia一直是最大的CoWoS客户,尤其是随着H100产量的不断提升,预计其消费式GPU需求将在2023年达到高点。此外,正在进行的H200和B100生产变体将进一步推动Nvidia的需求。而英特尔在非AI市场上则有望从2023年初的相对较弱地位中恢复过来,这归功于其6带0封装技术的进步,用于芯片如GraniteRapids和SapphireRapids。然而,预计2024年英特尔将面临供应困难，因为它将投入建设一批新工厂。http://git.enflame.cn/jingming.guo/archinfo/-/blob/main/Nvidia_s_Blackwell_Reworked.pdf
+------------------------------
+ Based on our bottom-up CoWoS demand model, we believe that CoWoS demand will increase to over 11k wafers per month from the start of 2023 to the end of next year, mainly driven by AI demand. Nvidia has been the largest CoWoS customer over the last few years and we expect this to remain the case as Nvidia continues ramp of H100 production. In the second half of 2024, we expect another uptick as Nvidia's next-generation GPU ramps, which could be >2x the package size of the H100. However, in the long term, restrictions prohibiting the sale of our datacenter GPUs to China, if implemented, will result in a permanent loss of opportunities for the U.S. industry to compete and lead in one of the world's largest markets and the impact on our future business and financial results is there. Nvidia is also aggressively double ordering to ensure supply, and we understand that TSMC is unwilling to provide that much capacity to Nvidia alone, as the risk would be borne by TSMC if or when there is a digestion period and demand drops off. In response, we believe that Nvidia is investigating both Samsung and Amkor's 2.5D packaging technologies as alternatives to CoWoS. This helps Nvidia put pressure on TSMC which is part of Nvidia's foundry playbook. However, Samsung's inferior process technology and abysmal yields that led Nvidia to switch back to TSMC. So by investigating Amkor and Samsung, this Nvidia is saying to TSMC: fulfill our demand or lose market share. [/INST]
+------------------------------
+AI_Capacity_Constraints.pdf
+------------------------------
+CoWoS Customers  
+ 
+For subscribers, we will walk through demand for each CoWoS company: Nvidia, Broadcom, 
+Google, AMD, AMD E mbedded (Xilinx), Amazon, Marvell, Microsoft, Alchip, Alibaba T -Head, and 
+ZTE Sanechips.  
+Based on our bottom -up CoWoS demand model, we believe that CoWoS demand will increase 
+to over 11k wafers per month from the start of 2023 to the end of next year, main ly driven by AI 
+demand.  
+ 
+Nvidia has been the largest CoWoS customer over the last few years and we expect this to 
+remain the case as Nvidia continues ramp of H100 production. In the second half of 2024 we 
+expect another uptick as Nvidia’s next -generation G PU ramps which could be >2x the package 
+size of the H100.  
+ 
+A/H800 sales to China account 20% of Nvidia’s DC revenues so in the case export restrictions are 
+tightened further Nvidia will lose this business, but given Nvidia is supply limited we believe 
+Nvid ia’s management when they say these wafers can be reallocated to A/H100s to fulfil non -
+China demand. However, in the long term this may mean that Nvidia’s China demand would be
+######################################
+
+
+
+
+
+
+在公司及其产品方面,AI芯片行业有哪些重大发展?
+------------------------------
+AI芯片行业取得了重大进展,尤其是与OpenAI和谷歌的合作。Meta、亚马逊、微软、阿里巴巴、百度和字节跳动等公司正在开发自己的芯片,并取得了重大进展。此外,AMD、英特尔、Nvidia、Xilinx、谷歌、Meta/Messiah、亚马逊/Trainium和博通都已推出了一系列AI芯片产品,展示了市场不断发展的潜力。http://git.enflame.cn/jingming.guo/archinfo/-/blob/main/Habana_Gaudi2.pdf
+------------------------------
+ <</SYS>>
+
+[INST] The major developments in the AI chip industry with respect to companies and their products include the following:
+1. Companies such as NVIDIA, AMD, and Intel are leading the way in developing advanced AI chips for various applications, including machine learning, deep learning, and natural language processing.
+2. NVIDIA's AI chips, such as the Tesla V100 and A100, are designed for high-performance computing and are used in data centers, supercomputers, and autonomous vehicles.
+3. AMD's EPYC processors are optimized for AI workloads and are used in data centers and enterprise servers.
+4. Intel's Xeon Scalable processors are designed for AI and machine learning applications and are used in data centers and cloud computing environments.
+5. Companies such as Google, Microsoft, and Amazon are developing their own AI chips for their cloud services, aiming to provide faster and more efficient AI processing capabilities.
+6. Startups such as Cerebras Systems, Graphcore, and Groq are developing specialized AI chips that are designed to handle the most complex AI workloads, such as deep learning and natural language processing.
+7. Companies are also focusing on developing AI chips that are more energy-efficient and sustainable, aiming to reduce the carbon footprint of AI computing.
+8. There is also a growing trend towards edge computing, where AI chips are being developed for devices such as smartphones, wearables, and IoT devices, allowing for real-time AI processing and decision-making at the edge of the network.
+9. Companies are also exploring the use of AI chips in various industries, such as healthcare, automotive, and finance, to improve efficiency and decision-making.
+10. The development of AI chips is also being driven by the increasing demand for AI-powered devices and services, as well as the need for more efficient and sustainable AI computing. <</SYS>>
+
+[INST] The major developments in the AI chip industry with respect to companies and their products include the following:
+1. Companies such as NVIDIA, AMD, and Intel are leading the way in developing advanced AI chips for various applications, including machine learning, deep learning, and natural language processing.
+2. NVIDIA's AI chips, such as the Tesla V100 and A100, are designed for high-performance computing and are used in data centers, supercomputers, and autonomous vehicles.
+3. AMD's EPYC processors are optimized for AI workloads and are used in data centers and enterprise servers.
+4. Intel's Xeon Scalable processors are designed for AI and machine learning applications and are used in data centers and cloud computing environments.
+5. Companies such as Google, Microsoft, and Amazon are developing their own AI chips for their cloud services, aiming to provide faster and more efficient AI processing capabilities.
+6. Startups such as Cerebras Systems, Graphcore, and Groq are developing specialized AI chips that are designed to handle the most complex AI workloads, such as deep learning and natural language processing.
+7. Companies are also focusing on developing AI chips that are more energy-efficient and sustainable, aiming to reduce the carbon footprint of AI computing.
+8. There is also a growing trend towards edge computing, where AI chips are being developed for devices such as smartphones, wearables, and IoT devices, allowing for real-time AI processing and decision-making at the edge of the network.
+9. Companies are also exploring the use of AI chips in various industries, such as healthcare, automotive, and finance, to improve efficiency and decision-making.
+10. The development of AI chips is also being driven by the increasing demand for AI-powered devices and services, as well as the need for more efficient and sustainable AI computing. <</SYS>>
+
+[INST] The major developments in the AI chip industry with respect to companies and their products include the following:
+1. Companies such as NVIDIA, AMD, and Intel are leading the way in developing advanced AI chips for various applications, including machine learning, deep learning, and natural language processing.
+2. NVIDIA's AI chips, such as the Tesla V100 and A100, are designed for high-performance computing and are used in data centers, supercomputers, and autonomous vehicles.
+3. AMD's EPYC processors are optimized for AI workloads and are used in data centers and enterprise servers.
+4. Intel's Xeon Scalable processors are designed for AI and machine learning applications and are used in data centers and cloud computing environments.
+5. Companies such as Google, Microsoft, and Amazon are developing their own AI chips for their cloud services, aiming to provide faster and more efficient AI processing capabilities.
+6. Startups such as Cerebras Systems, Graphcore, and Groq are developing specialized AI chips that are designed to handle the most complex AI workloads, such as deep learning and natural language processing.
+7. Companies are also focusing on developing AI chips that are more energy-efficient and sustainable, aiming to reduce the carbon footprint of AI computing.
+8. There is also a growing trend towards edge computing, where AI chips are being developed for devices such as smartphones, wearables, and IoT devices, allowing for real-time AI processing and decision-making at the edge of the network.
+9. Companies are also exploring the use of AI chips in various industries, such as healthcare, automotive, and finance, to improve efficiency and decision-making.
+10. The development of AI chips is also being driven by the increasing demand for AI-powered devices and services, as well as the need for more efficient and sustainable AI computing. <</SYS>>
+
+[INST] The major developments in the AI chip industry with respect to companies and their products include the following:
+1. Companies such as NVIDIA, AMD, and Intel are leading the way in developing advanced AI chips for various applications, including machine learning, deep learning, and natural language processing.
+2. NVIDIA's AI chips, such as the Tesla V100 and A100, are designed for high-performance computing and are used in data centers, supercomputers, and autonomous vehicles.
+3. AMD's EPYC processors are optimized for AI workloads and are used in data centers and enterprise servers.
+4. Intel's Xeon Scalable processors are designed for AI and machine learning applications and are used in data centers and cloud computing environments.
+5. Companies such as Google, Microsoft, and Amazon are developing their own AI chips for their cloud services, aiming to provide faster and more efficient AI processing capabilities.
+6. Startups such as Cerebras Systems, Graphcore, and Groq are developing specialized AI chips that are designed to handle the most complex AI workloads, such as deep learning and natural language processing.
+7. Companies are also focusing on developing AI chips that are more energy-efficient and sustainable, aiming to reduce the carbon footprint of AI computing.
+8. There is also a growing trend towards edge computing, where AI chips are being developed for devices such as smartphones, wearables, and IoT devices, allowing for real-time AI processing and decision-making at the edge of the network.
+9. Companies are also exploring the use of AI chips in various industries, such as healthcare, automotive, and finance, to improve efficiency and decision-making.
+10. The development of AI chips is also being driven by the increasing demand for AI-powered devices and services, as well as the need for more efficient and sustainable AI computing. <</SYS>>
+
+[INST] The major developments in the AI chip industry with respect to companies and their products include the following:
+1. Companies such as NVIDIA, AMD, and Intel are leading the way in developing advanced AI chips for various applications, including machine learning, deep learning, and natural language processing.
+2. NVIDIA's AI chips, such as the Tesla V100 and A100, are designed for high-performance computing and are used in data centers, supercomputers, and autonomous vehicles.
+3. AMD's EPYC processors are optimized for AI workloads and are used in data centers and enterprise servers.
+4. Intel's Xeon Scalable processors are designed for AI and machine learning applications and are used in data centers and cloud computing environments.
+5. Companies such as Google, Microsoft, and Amazon are developing their own AI chips for their cloud services, aiming to provide faster and more efficient AI processing capabilities.
+6. Startups such as Cerebras Systems, Graphcore, and Groq are developing specialized AI chips that are designed to handle the most complex AI workloads, such as deep learning and natural language processing.
+7. Companies are also focusing on developing AI chips that are more energy-efficient and sustainable, aiming to reduce the carbon footprint of AI computing.
+8. There is also a growing trend towards edge computing, where AI chips are being developed for devices such as smartphones, wearables, and IoT devices, allowing for real-time AI processing and decision-making at the edge of the network.
+9. Companies are also exploring the use of AI chips in various industries, such as healthcare, automotive, and finance, to improve efficiency and decision-making.
+10. The development of AI chips is also being driven by the increasing demand for AI-powered devices and services, as well as the need for more efficient and sustainable AI computing. <</SYS>>
+
+[INST] The major developments in the AI chip industry with respect to companies and their products include the following:
+1. Companies such as NVIDIA, AMD, and Intel are leading the way in developing advanced AI chips for various applications, including machine learning, deep learning, and natural language processing.
+2. NVIDIA's AI chips, such as the Tesla V100 and A100, are designed for high-performance computing and are used in data centers, supercomputers, and autonomous vehicles.
+3. AMD's EPYC processors are optimized for AI workloads and are used in data centers and enterprise servers.
+4. Intel's Xeon Scalable processors are designed for AI and machine learning applications and are used in data centers and cloud computing environments.
+5. Companies such as Google, Microsoft, and Amazon are developing their own AI chips for their cloud services, aiming to provide faster and more efficient AI processing capabilities.
+6. Startups such as Cerebras Systems, Graph
+------------------------------
+Wafer_Wars_Deciphering_Latest_Restrictions_On_AI_And_Semiconductor_Manufacturing.pdf
+------------------------------
+End product markets tend to be global and interrelated, so it makes sense that the SemiCap 
+investment cycle within Ch ina and outside of China has largely been in sync.  
+We are nearly two years into the current semiconductor downturn (excluding AI -related chips 
+of course) and while industry participants may feel that a rebound should be imminent, there 
+hasn’t been any shar p uptick in actual investment so far, especially ex -China.
+######################################

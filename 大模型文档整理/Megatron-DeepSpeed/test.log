@@ -1,0 +1,762 @@
+nohup: ignoring input
+/etc/bash.bashrc: line 9: PS1: unbound variable
+python -u -m torch.distributed.run --nproc_per_node 4 --nnodes 1 --rdzv_endpoint localhost:6777 --rdzv_backend c10d --max_restarts 0 --tee 3 pretrain_gpt.py --tensor-model-parallel-size 1 --pipeline-model-parallel-size 2 --distributed-backend nccl --num-layers 2 --hidden-size 8 --num-attention-heads 2 --seq-length 512 --max-position-embeddings 512 --micro-batch-size 1 --rampup-batch-size 2 2 1_000 --global-batch-size 16 --train-samples 10_000 --optimizer adam --adam-beta1 0.9 --adam-beta2 0.95 --adam-eps 1e-8 --lr 1e-4 --lr-warmup-samples 5 --min-lr 1e-6 --lr-decay-style cosine --lr-decay-samples 12 --clip-grad 1.0 --weight-decay 1e-1 --embed-layernorm --fp16 --partition-activations --seed 42 --vocab-file /home/intern/LYZ/LLM/dataset/openwebtxt_275M/gpt2-vocab.json --merge-file /home/intern/LYZ/LLM/dataset/openwebtxt_275M/gpt2-merges.txt --exit-interval 100 --log-interval 10 --save-interval 50 --eval-interval 100 --eval-iters 1000 --checkpoint-activations --save /home/intern/LYZ/LLM/mixtral_8x7B_v0_1 --load /home/intern/LYZ/LLM/mixtral_8x7B_v0_1 --data-path /home/intern/LYZ/LLM/dataset/openwebtxt_275M/openwebtxt/train --tensorboard-dir /home/intern/LYZ/LLM/dataset/tensorboard --tensorboard-queue-size 5 --log-timers-to-tensorboard --log-batch-size-to-tensorboard --log-validation-ppl-to-tensorboard --kill-switch-path /tmp/kill-switch --deepspeed --deepspeed_config ./ds_config.json --zero-stage 1 --deepspeed-activation-checkpointing
+[1723117057.964777] [sse-lg-113-99:6604 :f]        vfs_fuse.c:281  UCX  ERROR inotify_add_watch(/tmp) failed: No space left on device
+master_addr is only used for static rdzv_backend and when rdzv_endpoint is not specified.
+WARNING:__main__:
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+[default0]:[1723117060.017004] [sse-lg-113-99:6678 :f]        vfs_fuse.c:281  UCX  ERROR inotify_add_watch(/tmp) failed: No space left on device
+[default1]:[1723117060.019497] [sse-lg-113-99:6679 :f]        vfs_fuse.c:281  UCX  ERROR inotify_add_watch(/tmp) failed: No space left on device
+[default2]:[1723117060.001530] [sse-lg-113-99:6680 :f]        vfs_fuse.c:281  UCX  ERROR inotify_add_watch(/tmp) failed: No space left on device
+[default3]:[1723117060.024099] [sse-lg-113-99:6681 :f]        vfs_fuse.c:281  UCX  ERROR inotify_add_watch(/tmp) failed: No space left on device
+[default1]:[2024-08-08 11:37:42,632] [INFO] [real_accelerator.py:203:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[default3]:[2024-08-08 11:37:42,591] [INFO] [real_accelerator.py:203:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[default0]:[2024-08-08 11:37:42,733] [INFO] [real_accelerator.py:203:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[default2]:[2024-08-08 11:37:42,767] [INFO] [real_accelerator.py:203:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[default3]:[93m [WARNING] [0m async_io requires the dev libaio .so object and headers but these were not found.
+[default1]:[93m [WARNING] [0m async_io requires the dev libaio .so object and headers but these were not found.
+[default1]:[93m [WARNING] [0m async_io: please install the libaio-dev package with apt
+[default1]:[93m [WARNING] [0m If libaio is already installed (perhaps from source), try setting the CFLAGS and LDFLAGS environment variables to where it can be found.
+[default1]:[93m [WARNING] [0m Please specify the CUTLASS repo directory as environment variable $CUTLASS_PATH
+[default3]:[93m [WARNING] [0m async_io: please install the libaio-dev package with apt
+[default3]:[93m [WARNING] [0m If libaio is already installed (perhaps from source), try setting the CFLAGS and LDFLAGS environment variables to where it can be found.
+[default3]:[93m [WARNING] [0m Please specify the CUTLASS repo directory as environment variable $CUTLASS_PATH
+[default0]:[93m [WARNING] [0m async_io requires the dev libaio .so object and headers but these were not found.
+[default0]:[93m [WARNING] [0m async_io: please install the libaio-dev package with apt
+[default0]:[93m [WARNING] [0m If libaio is already installed (perhaps from source), try setting the CFLAGS and LDFLAGS environment variables to where it can be found.
+[default0]:[93m [WARNING] [0m Please specify the CUTLASS repo directory as environment variable $CUTLASS_PATH
+[default2]:[93m [WARNING] [0m async_io requires the dev libaio .so object and headers but these were not found.
+[default2]:[93m [WARNING] [0m async_io: please install the libaio-dev package with apt
+[default2]:[93m [WARNING] [0m If libaio is already installed (perhaps from source), try setting the CFLAGS and LDFLAGS environment variables to where it can be found.
+[default2]:[93m [WARNING] [0m Please specify the CUTLASS repo directory as environment variable $CUTLASS_PATH
+[default1]:[93m [WARNING] [0m FP Quantizer is using an untested triton version (2.1.0), only 2.3.0 and 2.3.1 are known to be compatible with these kernels
+[default1]:[93m [WARNING] [0m sparse_attn requires a torch version >= 1.5 and < 2.0 but detected 2.1
+[default1]:[93m [WARNING] [0m using untested triton version (2.1.0), only 1.0.0 is known to be compatible
+[default3]:[93m [WARNING] [0m FP Quantizer is using an untested triton version (2.1.0), only 2.3.0 and 2.3.1 are known to be compatible with these kernels
+[default3]:[93m [WARNING] [0m sparse_attn requires a torch version >= 1.5 and < 2.0 but detected 2.1
+[default3]:[93m [WARNING] [0m using untested triton version (2.1.0), only 1.0.0 is known to be compatible
+[default0]:[93m [WARNING] [0m FP Quantizer is using an untested triton version (2.1.0), only 2.3.0 and 2.3.1 are known to be compatible with these kernels
+[default2]:[93m [WARNING] [0m FP Quantizer is using an untested triton version (2.1.0), only 2.3.0 and 2.3.1 are known to be compatible with these kernels
+[default0]:[93m [WARNING] [0m sparse_attn requires a torch version >= 1.5 and < 2.0 but detected 2.1
+[default0]:[93m [WARNING] [0m using untested triton version (2.1.0), only 1.0.0 is known to be compatible
+[default2]:[93m [WARNING] [0m sparse_attn requires a torch version >= 1.5 and < 2.0 but detected 2.1
+[default2]:[93m [WARNING] [0m using untested triton version (2.1.0), only 1.0.0 is known to be compatible
+[default0]:using world size: 4, data-parallel-size: 2, tensor-model-parallel size: 1, pipeline-model-parallel size: 2 
+[default0]:using torch.float16 for parameters ...
+[default0]:------------------------ arguments ------------------------
+[default0]:  abort_on_unmet_fused_kernel_constraints ......... False
+[default0]:  accumulate_allreduce_grads_in_fp32 .............. False
+[default0]:  adam_beta1 ...................................... 0.9
+[default0]:  adam_beta2 ...................................... 0.95
+[default0]:  adam_eps ........................................ 1e-08
+[default0]:  adlr_autoresume ................................. False
+[default0]:  adlr_autoresume_interval ........................ 1000
+[default0]:  apply_query_key_layer_scaling ................... True
+[default0]:  apply_residual_connection_post_layernorm ........ False
+[default0]:  attention_dropout ............................... 0.1
+[default0]:  attention_softmax_in_fp32 ....................... False
+[default0]:  bert_binary_head ................................ True
+[default0]:  bert_load ....................................... None
+[default0]:  bf16 ............................................ False
+[default0]:  bias_dropout_fusion ............................. True
+[default0]:  bias_gelu_fusion ................................ True
+[default0]:  biencoder_projection_dim ........................ 0
+[default0]:  biencoder_shared_query_context_model ............ False
+[default0]:  block_data_path ................................. None
+[default0]:  checkpoint_activations .......................... True
+[default0]:  checkpoint_in_cpu ............................... False
+[default0]:  checkpoint_num_layers ........................... 1
+[default0]:  clip_grad ....................................... 1.0
+[default0]:  codecarbon_dir .................................. None
+[default0]:  consumed_train_samples .......................... 0
+[default0]:  consumed_train_tokens ........................... 0
+[default0]:  consumed_valid_samples .......................... 0
+[default0]:  contigious_checkpointing ........................ False
+[default0]:  cpu_optimizer ................................... False
+[default0]:  cpu_torch_adam .................................. False
+[default0]:  curriculum_learning ............................. False
+[default0]:  data_impl ....................................... infer
+[default0]:  data_parallel_size .............................. 2
+[default0]:  data_path ....................................... ['/home/intern/LYZ/LLM/dataset/openwebtxt_275M/openwebtxt/train']
+[default0]:  dataloader_type ................................. single
+[default0]:  DDP_impl ........................................ local
+[default0]:  decoder_seq_length .............................. None
+[default0]:  deepscale ....................................... False
+[default0]:  deepscale_config ................................ None
+[default0]:  deepspeed ....................................... True
+[default0]:  deepspeed_activation_checkpointing .............. True
+[default0]:  deepspeed_config ................................ ./ds_config.json
+[default0]:  distribute_checkpointed_activations ............. False
+[default0]:  distributed_backend ............................. nccl
+[default0]:  embed_layernorm ................................. True
+[default0]:  embedding_path .................................. None
+[default0]:  encoder_seq_length .............................. 512
+[default0]:  eod_mask_loss ................................... False
+[default0]:  eval_interval ................................... 100
+[default0]:  eval_iters ...................................... 1000
+[default0]:  eval_only ....................................... None
+[default0]:  evidence_data_path .............................. None
+[default0]:  exit_duration_in_mins ........................... None
+[default0]:  exit_interval ................................... 100
+[default0]:  ffn_hidden_size ................................. 32
+[default0]:  finetune ........................................ False
+[default0]:  fp16 ............................................ True
+[default0]:  fp16_lm_cross_entropy ........................... False
+[default0]:  fp32_residual_connection ........................ False
+[default0]:  gigaflos_no_embeds .............................. 0
+[default0]:  global_batch_size ............................... 16
+[default0]:  glu_activation .................................. None
+[default0]:  hidden_dropout .................................. 0.1
+[default0]:  hidden_size ..................................... 8
+[default0]:  hysteresis ...................................... 2
+[default0]:  ict_head_size ................................... None
+[default0]:  ict_load ........................................ None
+[default0]:  img_dim ......................................... 224
+[default0]:  indexer_batch_size .............................. 128
+[default0]:  indexer_log_interval ............................ 1000
+[default0]:  inference ....................................... False
+[default0]:  init_method_std ................................. 0.02
+[default0]:  init_method_xavier_uniform ...................... False
+[default0]:  initial_loss_scale .............................. 4294967296
+[default0]:  kill_switch_path ................................ /tmp/kill-switch
+[default0]:  kv_channels ..................................... 4
+[default0]:  layernorm_epsilon ............................... 1e-05
+[default0]:  lazy_mpu_init ................................... None
+[default0]:  load ............................................ /home/intern/LYZ/LLM/mixtral_8x7B_v0_1
+[default0]:  local_rank ...................................... None
+[default0]:  log_batch_size_to_tensorboard ................... True
+[default0]:  log_interval .................................... 10
+[default0]:  log_learning_rate_to_tensorboard ................ True
+[default0]:  log_level ....................................... None
+[default0]:  log_level_replica ............................... None
+[default0]:  log_loss_scale_to_tensorboard ................... True
+[default0]:  log_num_zeros_in_grad ........................... False
+[default0]:  log_params_norm ................................. False
+[default0]:  log_path ........................................ None
+[default0]:  log_timers_to_tensorboard ....................... True
+[default0]:  log_validation_ppl_to_tensorboard ............... True
+[default0]:  loss_on_targets_only ............................ False
+[default0]:  loss_scale ...................................... None
+[default0]:  loss_scale_window ............................... 1000
+[default0]:  lr .............................................. 0.0001
+[default0]:  lr_decay_iters .................................. None
+[default0]:  lr_decay_samples ................................ 12
+[default0]:  lr_decay_style .................................. cosine
+[default0]:  lr_decay_tokens ................................. None
+[default0]:  lr_warmup_fraction .............................. None
+[default0]:  lr_warmup_iters ................................. 0
+[default0]:  lr_warmup_samples ............................... 5
+[default0]:  make_vocab_size_divisible_by .................... 128
+[default0]:  mask_prob ....................................... 0.15
+[default0]:  masked_softmax_fusion ........................... True
+[default0]:  max_position_embeddings ......................... 512
+[default0]:  mean_noise_span_length .......................... None
+[default0]:  memory_centric_tiled_linear ..................... False
+[default0]:  merge_file ...................................... /home/intern/LYZ/LLM/dataset/openwebtxt_275M/gpt2-merges.txt
+[default0]:  micro_batch_size ................................ 1
+[default0]:  min_loss_scale .................................. 1.0
+[default0]:  min_lr .......................................... 1e-06
+[default0]:  mmap_warmup ..................................... False
+[default0]:  no_load_optim ................................... None
+[default0]:  no_load_rng ..................................... None
+[default0]:  no_save_optim ................................... None
+[default0]:  no_save_rng ..................................... None
+[default0]:  noise_density ................................... None
+[default0]:  num_attention_heads ............................. 2
+[default0]:  num_channels .................................... 3
+[default0]:  num_classes ..................................... 1000
+[default0]:  num_layers ...................................... 2
+[default0]:  num_layers_per_virtual_pipeline_stage ........... None
+[default0]:  num_workers ..................................... 2
+[default0]:  onnx_safe ....................................... None
+[default0]:  openai_gelu ..................................... False
+[default0]:  optimizer ....................................... adam
+[default0]:  override_lr_scheduler ........................... False
+[default0]:  pad_vocab_size_to ............................... None
+[default0]:  params_dtype .................................... torch.float16
+[default0]:  partition_activations ........................... True
+[default0]:  patch_dim ....................................... 16
+[default0]:  pipeline_model_parallel_size .................... 2
+[default0]:  position_embedding_type ......................... PositionEmbeddingType.absolute
+[default0]:  pp_partition_method ............................. None
+[default0]:  profile_backward ................................ False
+[default0]:  query_in_block_prob ............................. 0.1
+[default0]:  rampup_batch_size ............................... ['2', '2', '1_000']
+[default0]:  rank ............................................ 0
+[default0]:  remote_device ................................... none
+[default0]:  reset_attention_mask ............................ False
+[default0]:  reset_position_ids .............................. False
+[default0]:  retriever_report_topk_accuracies ................ []
+[default0]:  retriever_score_scaling ......................... False
+[default0]:  retriever_seq_length ............................ 256
+[default0]:  reweight_loss_based_on_position_frequency ....... False
+[default0]:  sample_rate ..................................... 1.0
+[default0]:  save ............................................ /home/intern/LYZ/LLM/mixtral_8x7B_v0_1
+[default0]:  save_interval ................................... 50
+[default0]:  scatter_gather_tensors_in_pipeline .............. True
+[default0]:  scattered_embeddings ............................ False
+[default0]:  seed ............................................ 42
+[default0]:  seq_length ...................................... 512
+[default0]:  sgd_momentum .................................... 0.9
+[default0]:  short_seq_prob .................................. 0.1
+[default0]:  skip_train_iteration_range ...................... None
+[default0]:  split ........................................... 969, 30, 1
+[default0]:  split_transformers .............................. False
+[default0]:  sync_tp_duplicated_parameters ................... False
+[default0]:  synchronize_each_layer .......................... False
+[default0]:  tensor_model_parallel_size ...................... 1
+[default0]:  tensorboard_dir ................................. /home/intern/LYZ/LLM/dataset/tensorboard
+[default0]:  tensorboard_log_interval ........................ 1
+[default0]:  tensorboard_queue_size .......................... 5
+[default0]:  test_weighted_split_names ....................... None
+[default0]:  test_weighted_split_paths ....................... None
+[default0]:  test_weighted_split_paths_path .................. None
+[default0]:  test_weighted_split_splits ...................... None
+[default0]:  test_weighted_split_weights ..................... None
+[default0]:  tile_factor ..................................... 1
+[default0]:  titles_data_path ................................ None
+[default0]:  tokenizer_name_or_path .......................... None
+[default0]:  tokenizer_type .................................. GPT2BPETokenizer
+[default0]:  train_iters ..................................... None
+[default0]:  train_samples ................................... 10000
+[default0]:  train_tokens .................................... None
+[default0]:  train_weighted_split_paths ...................... None
+[default0]:  train_weighted_split_paths_path ................. None
+[default0]:  universal_checkpoint ............................ False
+[default0]:  use_bnb_optimizer ............................... False
+[default0]:  use_checkpoint_lr_scheduler ..................... False
+[default0]:  use_contiguous_buffers_in_ddp ................... False
+[default0]:  use_cpu_initialization .......................... None
+[default0]:  use_one_sent_docs ............................... False
+[default0]:  use_pin_memory .................................. False
+[default0]:  valid_num_workers ............................... 2
+[default0]:  valid_weighted_split_names ...................... None
+[default0]:  valid_weighted_split_paths ...................... None
+[default0]:  valid_weighted_split_paths_path ................. None
+[default0]:  valid_weighted_split_splits ..................... None
+[default0]:  valid_weighted_split_weights .................... None
+[default0]:  virtual_pipeline_model_parallel_size ............ None
+[default0]:  vocab_extra_ids ................................. 0
+[default0]:  vocab_file ...................................... /home/intern/LYZ/LLM/dataset/openwebtxt_275M/gpt2-vocab.json
+[default0]:  weight_decay .................................... 0.1
+[default0]:  world_size ...................................... 4
+[default0]:  zero_allgather_bucket_size ...................... 0.0
+[default0]:  zero_contigious_gradients ....................... False
+[default0]:  zero_reduce_bucket_size ......................... 0.0
+[default0]:  zero_reduce_scatter ............................. False
+[default0]:  zero_stage ...................................... 1
+[default0]:-------------------- end of arguments ---------------------
+[default0]:will use batch size rampup starting from global batch size 2 to global batch size 16 with batch size increments 2 over 1000 samples.
+[default0]:> building GPT2BPETokenizer tokenizer ...
+[default1]:[W socket.cpp:663] [c10d] The client socket has failed to connect to [sse-lg-113-99]:34075 (errno: 22 - Invalid argument).
+[default1]:[W socket.cpp:663] [c10d] The client socket has failed to connect to [sse-lg-113-99]:34075 (errno: 22 - Invalid argument).
+[default1]:[W socket.cpp:663] [c10d] The client socket has failed to connect to [sse-lg-113-99]:34075 (errno: 22 - Invalid argument).
+[default3]:> setting tensorboard ...
+[default1]:[2024-08-08 11:37:45,176] [INFO] [comm.py:637:init_distributed] cdb=None
+[default1]:[W socket.cpp:663] [c10d] The client socket has failed to connect to [sse-lg-113-99]:34075 (errno: 22 - Invalid argument).
+[default1]:[W socket.cpp:663] [c10d] The client socket has failed to connect to [sse-lg-113-99]:34075 (errno: 22 - Invalid argument).
+[default1]:[W socket.cpp:663] [c10d] The client socket has failed to connect to [sse-lg-113-99]:34075 (errno: 22 - Invalid argument).
+[default1]:[W socket.cpp:663] [c10d] The client socket has failed to connect to [sse-lg-113-99]:34075 (errno: 22 - Invalid argument).
+[default1]:[W socket.cpp:663] [c10d] The client socket has failed to connect to [sse-lg-113-99]:34075 (errno: 22 - Invalid argument).
+[default1]:[W socket.cpp:663] [c10d] The client socket has failed to connect to [sse-lg-113-99]:34075 (errno: 22 - Invalid argument).
+[default1]:[W socket.cpp:663] [c10d] The client socket has failed to connect to [sse-lg-113-99]:34075 (errno: 22 - Invalid argument).
+[default1]:[W socket.cpp:663] [c10d] The client socket has failed to connect to [sse-lg-113-99]:34075 (errno: 22 - Invalid argument).
+[default1]:[W socket.cpp:663] [c10d] The client socket has failed to connect to [sse-lg-113-99]:34075 (errno: 22 - Invalid argument).
+[default0]: > padded vocab (size: 50257) with 47 dummy tokens (new size: 50304)
+[default0]:DeepSpeed general environment info:
+[default0]:torch install path ............... ['/usr/local/lib/python3.10/dist-packages/torch']
+[default0]:torch version .................... 2.1.0a0+32f93b1
+[default0]:deepspeed install path ........... ['/usr/local/lib/python3.10/dist-packages/deepspeed']
+[default0]:deepspeed info ................... 0.14.5+ade7149d, ade7149d, master
+[default0]:torch cuda version ............... 12.2
+[default0]:torch hip version ................ None
+[default0]:nvcc version ..................... 12.2
+[default0]:deepspeed wheel compiled w. ...... torch 2.1, cuda 12.2
+[default0]:shared memory (/dev/shm) size .... 64.00 GB
+[default0]:**** Git info for Megatron: git_hash=unknown git_branch=unknown ****
+[default0]:> initializing torch distributed ...
+[default0]:[2024-08-08 11:37:45,260] [INFO] [comm.py:637:init_distributed] cdb=None
+[default0]:[2024-08-08 11:37:45,260] [INFO] [comm.py:668:init_distributed] Initializing TorchBackend in DeepSpeed with backend nccl
+[default3]:[2024-08-08 11:37:45,367] [INFO] [comm.py:637:init_distributed] cdb=None
+[default2]:[2024-08-08 11:37:45,362] [INFO] [comm.py:637:init_distributed] cdb=None
+[default0]:> initializing tensor model parallel with size 1
+[default0]:> initializing pipeline model parallel with size 2
+[default0]:> setting random seeds to 42 ...
+[default0]:[2024-08-08 11:37:46,198] [INFO] [checkpointing.py:229:model_parallel_cuda_manual_seed] > initializing model parallel cuda seeds on global rank 0, model parallel rank 0, and data parallel rank 0 with model parallel seed: 2760 and data parallel seed: 42
+[default0]:> compiling dataset index builder ...
+[default0]:make: Entering directory '/home/intern/LYZ/LLM/Megatron-DeepSpeed/megatron/data'
+[default0]:Detected CUDA files, patching ldflags
+[default0]:Emitting ninja build file /home/intern/LYZ/LLM/Megatron-DeepSpeed/megatron/fused_kernels/build/build.ninja...
+[default0]:Building extension module scaled_upper_triang_masked_softmax_cuda...
+[default0]:Allowing ninja to set a default number of workers... (overridable by setting the environment variable MAX_JOBS=N)
+[default0]:make: Nothing to be done for 'default'.
+[default0]:make: Leaving directory '/home/intern/LYZ/LLM/Megatron-DeepSpeed/megatron/data'
+[default0]:>>> done with dataset index builder. Compilation time: 0.153 seconds
+[default0]:WARNING: constraints for invoking optimized fused softmax kernel are not met. We default back to unfused kernel invocations.
+[default0]:> compiling and loading fused kernels ...
+[default0]:ninja: no work to do.
+[default0]:Loading extension module scaled_upper_triang_masked_softmax_cuda...
+[default0]:Detected CUDA files, patching ldflags
+[default0]:Emitting ninja build file /home/intern/LYZ/LLM/Megatron-DeepSpeed/megatron/fused_kernels/build/build.ninja...
+[default0]:Building extension module scaled_masked_softmax_cuda...
+[default0]:Allowing ninja to set a default number of workers... (overridable by setting the environment variable MAX_JOBS=N)
+[default0]:Loading extension module scaled_masked_softmax_cuda...
+[default0]:ninja: no work to do.
+[default0]:Detected CUDA files, patching ldflags
+[default0]:Emitting ninja build file /home/intern/LYZ/LLM/Megatron-DeepSpeed/megatron/fused_kernels/build/build.ninja...
+[default0]:Building extension module fused_mix_prec_layer_norm_cuda...
+[default0]:Allowing ninja to set a default number of workers... (overridable by setting the environment variable MAX_JOBS=N)
+[default0]:ninja: no work to do.
+[default0]:Loading extension module fused_mix_prec_layer_norm_cuda...
+[default1]:/home/intern/LYZ/LLM/Megatron-DeepSpeed/megatron/training.py:114: UserWarning: The torch.cuda.*DtypeTensor constructors are no longer recommended. It's best to use methods such as torch.tensor(data, dtype=*, device='cuda') to create tensors. (Triggered internally at /opt/pytorch/pytorch/torch/csrc/tensor/python_tensor.cpp:83.)
+[default1]:  start_time_tensor = torch.cuda.FloatTensor([_TRAIN_START_TIME])
+[default0]:/home/intern/LYZ/LLM/Megatron-DeepSpeed/megatron/training.py:114: UserWarning: The torch.cuda.*DtypeTensor constructors are no longer recommended. It's best to use methods such as torch.tensor(data, dtype=*, device='cuda') to create tensors. (Triggered internally at /opt/pytorch/pytorch/torch/csrc/tensor/python_tensor.cpp:83.)
+[default0]:  start_time_tensor = torch.cuda.FloatTensor([_TRAIN_START_TIME])
+[default2]:/home/intern/LYZ/LLM/Megatron-DeepSpeed/megatron/training.py:114: UserWarning: The torch.cuda.*DtypeTensor constructors are no longer recommended. It's best to use methods such as torch.tensor(data, dtype=*, device='cuda') to create tensors. (Triggered internally at /opt/pytorch/pytorch/torch/csrc/tensor/python_tensor.cpp:83.)
+[default2]:  start_time_tensor = torch.cuda.FloatTensor([_TRAIN_START_TIME])
+[default0]:>>> done with compiling and loading fused kernels. Compilation time: 1.494 seconds
+[default3]:/home/intern/LYZ/LLM/Megatron-DeepSpeed/megatron/training.py:114: UserWarning: The torch.cuda.*DtypeTensor constructors are no longer recommended. It's best to use methods such as torch.tensor(data, dtype=*, device='cuda') to create tensors. (Triggered internally at /opt/pytorch/pytorch/torch/csrc/tensor/python_tensor.cpp:83.)
+[default3]:  start_time_tensor = torch.cuda.FloatTensor([_TRAIN_START_TIME])
+[default0]:time to initialize megatron (seconds): 11.855
+[default0]:[after megatron is initialized] datetime: 2024-08-08 11:37:47 
+[default0]:building GPT model ...
+[default0]:[2024-08-08 11:37:47,992] [INFO] [utils.py:781:see_memory_usage] Before Building Model
+[default0]:[2024-08-08 11:37:47,993] [INFO] [utils.py:782:see_memory_usage] MA 0.0 GB         Max_MA 0.0 GB         CA 0.0 GB         Max_CA 0 GB 
+[default0]:[2024-08-08 11:37:47,993] [INFO] [utils.py:789:see_memory_usage] CPU Virtual Memory:  used = 29.8 GB, percent = 5.9%
+[default0]:SEED_LAYERS=False BASE_SEED=1234 SEED_FN=None
+[default0]:Using topology: {ProcessCoord(pipe=0, data=0, model=0): 0, ProcessCoord(pipe=0, data=1, model=0): 1, ProcessCoord(pipe=1, data=0, model=0): 2, ProcessCoord(pipe=1, data=1, model=0): 3}
+[default0]:[2024-08-08 11:37:47,999] [INFO] [module.py:392:_partition_layers] Partitioning pipeline stages with method type:transformer
+[default0]:stage=0 layers=4
+[default0]:     0: _to_float16
+[default0]:     1: EmbeddingPipe
+[default0]:     2: <lambda>
+[default0]:     3: ParallelTransformerLayerPipe
+[default0]:stage=1 layers=5
+[default0]:     4: ParallelTransformerLayerPipe
+[default0]:     5: undo
+[default0]:     6: MixedFusedLayerNorm
+[default0]:     7: EmbeddingPipe
+[default0]:     8: float16_to_fp32
+[default0]:  loss: CrossEntropy
+[default3]:[2024-08-08 11:37:48,240] [INFO] [engine.py:141:__init__] is_pipe_partitioned= False is_grad_partitioned= False
+[default2]:[2024-08-08 11:37:48,243] [INFO] [engine.py:141:__init__] is_pipe_partitioned= False is_grad_partitioned= False
+[default0]:[2024-08-08 11:37:48,174] [INFO] [utils.py:781:see_memory_usage] After Building Model
+[default0]:[2024-08-08 11:37:48,175] [INFO] [utils.py:782:see_memory_usage] MA 0.0 GB         Max_MA 0.0 GB         CA 0.0 GB         Max_CA 0 GB 
+[default0]:[2024-08-08 11:37:48,175] [INFO] [utils.py:789:see_memory_usage] CPU Virtual Memory:  used = 29.99 GB, percent = 6.0%
+[default0]:setting training iterations to 748
+[default0]:> learning rate decay style: cosine
+[default0]:DeepSpeed is enabled.
+[default0]:[2024-08-08 11:37:48,177] [INFO] [logging.py:96:log_dist] [Rank 0] DeepSpeed info: version=0.14.5+ade7149d, git-hash=ade7149d, git-branch=master
+[default1]:[2024-08-08 11:37:48,327] [INFO] [engine.py:141:__init__] is_pipe_partitioned= False is_grad_partitioned= False
+[default0]:[2024-08-08 11:37:48,317] [INFO] [logging.py:96:log_dist] [Rank 0] DeepSpeed Flops Profiler Enabled: False
+[default0]:[2024-08-08 11:37:48,318] [INFO] [logging.py:96:log_dist] [Rank 0] Using client Optimizer as basic optimizer
+[default0]:[2024-08-08 11:37:48,318] [INFO] [logging.py:96:log_dist] [Rank 0] Removing param_group that has no 'params' in the basic Optimizer
+[default0]:[2024-08-08 11:37:48,319] [INFO] [logging.py:96:log_dist] [Rank 0] DeepSpeed Basic Optimizer = FusedAdam
+[default0]:[2024-08-08 11:37:48,319] [INFO] [utils.py:59:is_zero_supported_optimizer] Checking ZeRO support for optimizer=FusedAdam type=<class 'apex.optimizers.fused_adam.FusedAdam'>
+[default0]:[2024-08-08 11:37:48,319] [INFO] [logging.py:96:log_dist] [Rank 0] Creating torch.float16 ZeRO stage 1 optimizer
+[default0]:[2024-08-08 11:37:48,319] [INFO] [stage_1_and_2.py:148:__init__] Reduce bucket size 500,000,000
+[default0]:[2024-08-08 11:37:48,319] [INFO] [stage_1_and_2.py:149:__init__] Allgather bucket size 500,000,000
+[default0]:[2024-08-08 11:37:48,319] [INFO] [stage_1_and_2.py:150:__init__] CPU Offload: False
+[default0]:[2024-08-08 11:37:48,319] [INFO] [stage_1_and_2.py:151:__init__] Round robin gradient partitioning: False
+[default1]:[W ProcessGroupNCCL.cpp:1707] Warning: 0NCCL_AVOID_RECORD_STREAMS=1 has no effect for point-to-point collectives. (function operator())
+[default3]:[W ProcessGroupNCCL.cpp:1707] Warning: 0NCCL_AVOID_RECORD_STREAMS=1 has no effect for point-to-point collectives. (function operator())
+[default0]:[2024-08-08 11:37:48,426] [INFO] [utils.py:781:see_memory_usage] Before initializing optimizer states
+[default0]:[2024-08-08 11:37:48,427] [INFO] [utils.py:782:see_memory_usage] MA 0.0 GB         Max_MA 0.0 GB         CA 0.0 GB         Max_CA 0 GB 
+[default0]:[2024-08-08 11:37:48,427] [INFO] [utils.py:789:see_memory_usage] CPU Virtual Memory:  used = 30.34 GB, percent = 6.0%
+[default0]:[2024-08-08 11:37:48,522] [INFO] [utils.py:781:see_memory_usage] After initializing optimizer states
+[default0]:[2024-08-08 11:37:48,523] [INFO] [utils.py:782:see_memory_usage] MA 0.0 GB         Max_MA 0.0 GB         CA 0.0 GB         Max_CA 0 GB 
+[default0]:[2024-08-08 11:37:48,523] [INFO] [utils.py:789:see_memory_usage] CPU Virtual Memory:  used = 30.43 GB, percent = 6.0%
+[default0]:[2024-08-08 11:37:48,523] [INFO] [stage_1_and_2.py:543:__init__] optimizer state initialized
+[default0]:[2024-08-08 11:37:48,606] [INFO] [utils.py:781:see_memory_usage] After initializing ZeRO optimizer
+[default0]:[2024-08-08 11:37:48,607] [INFO] [utils.py:782:see_memory_usage] MA 0.0 GB         Max_MA 0.0 GB         CA 0.0 GB         Max_CA 0 GB 
+[default0]:[2024-08-08 11:37:48,607] [INFO] [utils.py:789:see_memory_usage] CPU Virtual Memory:  used = 30.43 GB, percent = 6.0%
+[default0]:[2024-08-08 11:37:48,608] [INFO] [logging.py:96:log_dist] [Rank 0] DeepSpeed Final Optimizer = DeepSpeedZeroOptimizer
+[default0]:[2024-08-08 11:37:48,608] [INFO] [logging.py:96:log_dist] [Rank 0] DeepSpeed using client LR scheduler
+[default0]:[2024-08-08 11:37:48,608] [INFO] [logging.py:96:log_dist] [Rank 0] DeepSpeed LR Scheduler = <megatron.learning_rates.AnnealingLR object at 0x7fdf1fea26e0>
+[default0]:[2024-08-08 11:37:48,608] [INFO] [logging.py:96:log_dist] [Rank 0] step=0, skipped=0, lr=[0.0, 0.0, 0.0], mom=[(0.9, 0.95), (0.9, 0.95), (0.9, 0.95)]
+[default0]:[2024-08-08 11:37:48,609] [INFO] [config.py:997:print] DeepSpeedEngine configuration:
+[default0]:[2024-08-08 11:37:48,609] [INFO] [config.py:1001:print]   activation_checkpointing_config  {
+[default0]:    "partition_activations": false, 
+[default0]:    "contiguous_memory_optimization": false, 
+[default0]:    "cpu_checkpointing": false, 
+[default0]:    "number_checkpoints": null, 
+[default0]:    "synchronize_checkpoint_boundary": false, 
+[default0]:    "profile": false
+[default0]:}
+[default0]:[2024-08-08 11:37:48,609] [INFO] [config.py:1001:print]   aio_config ................... {'block_size': 1048576, 'queue_depth': 8, 'thread_count': 1, 'single_submit': False, 'overlap_events': True}
+[default0]:[2024-08-08 11:37:48,609] [INFO] [config.py:1001:print]   amp_enabled .................. False
+[default0]:[2024-08-08 11:37:48,609] [INFO] [config.py:1001:print]   amp_params ................... False
+[default0]:[2024-08-08 11:37:48,609] [INFO] [config.py:1001:print]   autotuning_config ............ {
+[default0]:    "enabled": false, 
+[default0]:    "start_step": null, 
+[default0]:    "end_step": null, 
+[default0]:    "metric_path": null, 
+[default0]:    "arg_mappings": null, 
+[default0]:    "metric": "throughput", 
+[default0]:    "model_info": null, 
+[default0]:    "results_dir": "autotuning_results", 
+[default0]:    "exps_dir": "autotuning_exps", 
+[default0]:    "overwrite": true, 
+[default0]:    "fast": true, 
+[default0]:    "start_profile_step": 3, 
+[default0]:    "end_profile_step": 5, 
+[default0]:    "tuner_type": "gridsearch", 
+[default0]:    "tuner_early_stopping": 5, 
+[default0]:    "tuner_num_trials": 50, 
+[default0]:    "model_info_path": null, 
+[default0]:    "mp_size": 1, 
+[default0]:    "max_train_batch_size": null, 
+[default0]:    "min_train_batch_size": 1, 
+[default0]:    "max_train_micro_batch_size_per_gpu": 1.024000e+03, 
+[default0]:    "min_train_micro_batch_size_per_gpu": 1, 
+[default0]:    "num_tuning_micro_batch_sizes": 3
+[default0]:}
+[default0]:[2024-08-08 11:37:48,609] [INFO] [config.py:1001:print]   bfloat16_enabled ............. False
+[default0]:[2024-08-08 11:37:48,609] [INFO] [config.py:1001:print]   bfloat16_immediate_grad_update  False
+[default0]:[2024-08-08 11:37:48,609] [INFO] [config.py:1001:print]   checkpoint_parallel_write_pipeline  False
+[default0]:[2024-08-08 11:37:48,609] [INFO] [config.py:1001:print]   checkpoint_tag_validation_enabled  True
+[default0]:[2024-08-08 11:37:48,609] [INFO] [config.py:1001:print]   checkpoint_tag_validation_fail  False
+[default0]:[2024-08-08 11:37:48,609] [INFO] [config.py:1001:print]   comms_config ................. <deepspeed.comm.config.DeepSpeedCommsConfig object at 0x7fdf1fea1f60>
+[default0]:[2024-08-08 11:37:48,609] [INFO] [config.py:1001:print]   communication_data_type ...... None
+[default0]:[2024-08-08 11:37:48,609] [INFO] [config.py:1001:print]   compression_config ........... {'weight_quantization': {'shared_parameters': {'enabled': False, 'quantizer_kernel': False, 'schedule_offset': 0, 'quantize_groups': 1, 'quantize_verbose': False, 'quantization_type': 'symmetric', 'quantize_weight_in_forward': False, 'rounding': 'nearest', 'fp16_mixed_quantize': False, 'quantize_change_ratio': 0.001}, 'different_groups': {}}, 'activation_quantization': {'shared_parameters': {'enabled': False, 'quantization_type': 'symmetric', 'range_calibration': 'dynamic', 'schedule_offset': 1000}, 'different_groups': {}}, 'sparse_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'row_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'head_pruning': {'shared_parameters': {'enabled': False, 'method': 'topk', 'schedule_offset': 1000}, 'different_groups': {}}, 'channel_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'layer_reduction': {'enabled': False}}
+[default0]:[2024-08-08 11:37:48,609] [INFO] [config.py:1001:print]   curriculum_enabled_legacy .... False
+[default0]:[2024-08-08 11:37:48,609] [INFO] [config.py:1001:print]   curriculum_params_legacy ..... False
+[default0]:[2024-08-08 11:37:48,609] [INFO] [config.py:1001:print]   data_efficiency_config ....... {'enabled': False, 'seed': 1234, 'data_sampling': {'enabled': False, 'num_epochs': 1000, 'num_workers': 0, 'curriculum_learning': {'enabled': False}}, 'data_routing': {'enabled': False, 'random_ltd': {'enabled': False, 'layer_token_lr_schedule': {'enabled': False}}}}
+[default0]:[2024-08-08 11:37:48,609] [INFO] [config.py:1001:print]   data_efficiency_enabled ...... False
+[default0]:[2024-08-08 11:37:48,609] [INFO] [config.py:1001:print]   dataloader_drop_last ......... False
+[default0]:[2024-08-08 11:37:48,610] [INFO] [config.py:1001:print]   disable_allgather ............ False
+[default0]:[2024-08-08 11:37:48,610] [INFO] [config.py:1001:print]   dump_state ................... False
+[default0]:[2024-08-08 11:37:48,610] [INFO] [config.py:1001:print]   dynamic_loss_scale_args ...... {'init_scale': 4096, 'scale_window': 500, 'delayed_shift': 2, 'consecutive_hysteresis': False, 'min_scale': 1}
+[default0]:[2024-08-08 11:37:48,610] [INFO] [config.py:1001:print]   eigenvalue_enabled ........... False
+[default0]:[2024-08-08 11:37:48,610] [INFO] [config.py:1001:print]   eigenvalue_gas_boundary_resolution  1
+[default0]:[2024-08-08 11:37:48,610] [INFO] [config.py:1001:print]   eigenvalue_layer_name ........ bert.encoder.layer
+[default0]:[2024-08-08 11:37:48,610] [INFO] [config.py:1001:print]   eigenvalue_layer_num ......... 0
+[default0]:[2024-08-08 11:37:48,610] [INFO] [config.py:1001:print]   eigenvalue_max_iter .......... 100
+[default0]:[2024-08-08 11:37:48,610] [INFO] [config.py:1001:print]   eigenvalue_stability ......... 1e-06
+[default0]:[2024-08-08 11:37:48,610] [INFO] [config.py:1001:print]   eigenvalue_tol ............... 0.01
+[default0]:[2024-08-08 11:37:48,610] [INFO] [config.py:1001:print]   eigenvalue_verbose ........... False
+[default0]:[2024-08-08 11:37:48,610] [INFO] [config.py:1001:print]   elasticity_enabled ........... False
+[default0]:[2024-08-08 11:37:48,610] [INFO] [config.py:1001:print]   flops_profiler_config ........ {
+[default0]:    "enabled": false, 
+[default0]:    "recompute_fwd_factor": 0.0, 
+[default0]:    "profile_step": 1, 
+[default0]:    "module_depth": -1, 
+[default0]:    "top_modules": 1, 
+[default0]:    "detailed": true, 
+[default0]:    "output_file": null
+[default0]:}
+[default0]:[2024-08-08 11:37:48,610] [INFO] [config.py:1001:print]   fp16_auto_cast ............... False
+[default0]:[2024-08-08 11:37:48,610] [INFO] [config.py:1001:print]   fp16_enabled ................. True
+[default0]:[2024-08-08 11:37:48,610] [INFO] [config.py:1001:print]   fp16_master_weights_and_gradients  False
+[default0]:[2024-08-08 11:37:48,610] [INFO] [config.py:1001:print]   global_rank .................. 0
+[default0]:[2024-08-08 11:37:48,610] [INFO] [config.py:1001:print]   grad_accum_dtype ............. None
+[default0]:[2024-08-08 11:37:48,610] [INFO] [config.py:1001:print]   gradient_accumulation_steps .. 8
+[default0]:[2024-08-08 11:37:48,610] [INFO] [config.py:1001:print]   gradient_clipping ............ 1.0
+[default0]:[2024-08-08 11:37:48,610] [INFO] [config.py:1001:print]   gradient_predivide_factor .... 1.0
+[default0]:[2024-08-08 11:37:48,610] [INFO] [config.py:1001:print]   graph_harvesting ............. False
+[default0]:[2024-08-08 11:37:48,610] [INFO] [config.py:1001:print]   hybrid_engine ................ enabled=False max_out_tokens=512 inference_tp_size=1 release_inference_cache=False pin_parameters=True tp_gather_partition_size=8
+[default0]:[2024-08-08 11:37:48,610] [INFO] [config.py:1001:print]   initial_dynamic_scale ........ 4096
+[default0]:[2024-08-08 11:37:48,610] [INFO] [config.py:1001:print]   load_universal_checkpoint .... False
+[default0]:[2024-08-08 11:37:48,610] [INFO] [config.py:1001:print]   loss_scale ................... 0
+[default0]:[2024-08-08 11:37:48,610] [INFO] [config.py:1001:print]   memory_breakdown ............. False
+[default0]:[2024-08-08 11:37:48,610] [INFO] [config.py:1001:print]   mics_hierarchial_params_gather  False
+[default0]:[2024-08-08 11:37:48,610] [INFO] [config.py:1001:print]   mics_shard_size .............. -1
+[default0]:[2024-08-08 11:37:48,610] [INFO] [config.py:1001:print]   monitor_config ............... tensorboard=TensorBoardConfig(enabled=False, output_path='', job_name='DeepSpeedJobName') comet=CometConfig(enabled=False, samples_log_interval=100, project=None, workspace=None, api_key=None, experiment_name=None, experiment_key=None, online=None, mode=None) wandb=WandbConfig(enabled=False, group=None, team=None, project='deepspeed') csv_monitor=CSVConfig(enabled=False, output_path='', job_name='DeepSpeedJobName') enabled=False
+[default0]:[2024-08-08 11:37:48,610] [INFO] [config.py:1001:print]   nebula_config ................ {
+[default0]:    "enabled": false, 
+[default0]:    "persistent_storage_path": null, 
+[default0]:    "persistent_time_interval": 100, 
+[default0]:    "num_of_version_in_retention": 2, 
+[default0]:    "enable_nebula_load": true, 
+[default0]:    "load_path": null
+[default0]:}
+[default0]:[2024-08-08 11:37:48,610] [INFO] [config.py:1001:print]   optimizer_legacy_fusion ...... False
+[default0]:[2024-08-08 11:37:48,610] [INFO] [config.py:1001:print]   optimizer_name ............... None
+[default0]:[2024-08-08 11:37:48,610] [INFO] [config.py:1001:print]   optimizer_params ............. None
+[default0]:[2024-08-08 11:37:48,611] [INFO] [config.py:1001:print]   pipeline ..................... {'stages': 'auto', 'partition': 'best', 'seed_layers': False, 'activation_checkpoint_interval': 0, 'pipe_partitioned': True, 'grad_partitioned': True}
+[default0]:[2024-08-08 11:37:48,611] [INFO] [config.py:1001:print]   pld_enabled .................. False
+[default0]:[2024-08-08 11:37:48,611] [INFO] [config.py:1001:print]   pld_params ................... False
+[default0]:[2024-08-08 11:37:48,611] [INFO] [config.py:1001:print]   prescale_gradients ........... False
+[default0]:[2024-08-08 11:37:48,611] [INFO] [config.py:1001:print]   scheduler_name ............... None
+[default0]:[2024-08-08 11:37:48,611] [INFO] [config.py:1001:print]   scheduler_params ............. None
+[default0]:[2024-08-08 11:37:48,611] [INFO] [config.py:1001:print]   seq_parallel_communication_data_type  torch.float32
+[default0]:[2024-08-08 11:37:48,611] [INFO] [config.py:1001:print]   sparse_attention ............. None
+[default0]:[2024-08-08 11:37:48,611] [INFO] [config.py:1001:print]   sparse_gradients_enabled ..... False
+[default0]:[2024-08-08 11:37:48,611] [INFO] [config.py:1001:print]   steps_per_print .............. 2000
+[default0]:[2024-08-08 11:37:48,611] [INFO] [config.py:1001:print]   timers_config ................ enabled=True synchronized=True
+[default0]:[2024-08-08 11:37:48,611] [INFO] [config.py:1001:print]   train_batch_size ............. 16
+[default0]:[2024-08-08 11:37:48,611] [INFO] [config.py:1001:print]   train_micro_batch_size_per_gpu  1
+[default0]:[2024-08-08 11:37:48,611] [INFO] [config.py:1001:print]   use_data_before_expert_parallel_  False
+[default0]:[2024-08-08 11:37:48,611] [INFO] [config.py:1001:print]   use_node_local_storage ....... False
+[default0]:[2024-08-08 11:37:48,611] [INFO] [config.py:1001:print]   wall_clock_breakdown ......... False
+[default0]:[2024-08-08 11:37:48,611] [INFO] [config.py:1001:print]   weight_quantization_config ... None
+[default0]:[2024-08-08 11:37:48,611] [INFO] [config.py:1001:print]   world_size ................... 2
+[default0]:[2024-08-08 11:37:48,611] [INFO] [config.py:1001:print]   zero_allow_untested_optimizer  False
+[default0]:[2024-08-08 11:37:48,611] [INFO] [config.py:1001:print]   zero_config .................. stage=1 contiguous_gradients=True reduce_scatter=True reduce_bucket_size=500,000,000 use_multi_rank_bucket_allreduce=True allgather_partitions=True allgather_bucket_size=500,000,000 overlap_comm=False load_from_fp32_weights=True elastic_checkpoint=False offload_param=None offload_optimizer=None sub_group_size=1,000,000,000 cpu_offload_param=None cpu_offload_use_pin_memory=None cpu_offload=None prefetch_bucket_size=50,000,000 param_persistence_threshold=100,000 model_persistence_threshold=sys.maxsize max_live_parameters=1,000,000,000 max_reuse_distance=1,000,000,000 gather_16bit_weights_on_model_save=False use_all_reduce_for_fetch_params=False stage3_gather_fp16_weights_on_model_save=False ignore_unused_parameters=True legacy_stage1=False round_robin_gradients=False zero_hpz_partition_size=1 zero_quantized_weights=False zero_quantized_nontrainable_weights=False zero_quantized_gradients=False mics_shard_size=-1 mics_hierarchical_params_gather=False memory_efficient_linear=True pipeline_loading_checkpoint=False override_module_apply=True
+[default0]:[2024-08-08 11:37:48,611] [INFO] [config.py:1001:print]   zero_enabled ................. True
+[default0]:[2024-08-08 11:37:48,611] [INFO] [config.py:1001:print]   zero_force_ds_cpu_optimizer .. True
+[default0]:[2024-08-08 11:37:48,611] [INFO] [config.py:1001:print]   zero_optimization_stage ...... 1
+[default0]:[2024-08-08 11:37:48,611] [INFO] [config.py:987:print_user_config]   json = {
+[default0]:    "train_micro_batch_size_per_gpu": 1, 
+[default0]:    "train_batch_size": 16, 
+[default0]:    "gradient_clipping": 1.0, 
+[default0]:    "zero_optimization": {
+[default0]:        "stage": 1
+[default0]:    }, 
+[default0]:    "fp16": {
+[default0]:        "enabled": true, 
+[default0]:        "loss_scale": 0, 
+[default0]:        "loss_scale_window": 500, 
+[default0]:        "hysteresis": 2, 
+[default0]:        "min_loss_scale": 1, 
+[default0]:        "initial_scale_power": 12
+[default0]:    }, 
+[default0]:    "steps_per_print": 2.000000e+03, 
+[default0]:    "wall_clock_breakdown": false
+[default0]:}
+[default0]:[2024-08-08 11:37:48,611] [INFO] [engine.py:100:__init__] CONFIG: micro_batches=8 micro_batch_size=1
+[default0]:[2024-08-08 11:37:48,611] [INFO] [engine.py:141:__init__] is_pipe_partitioned= False is_grad_partitioned= False
+[default2]:[2024-08-08 11:37:48,677] [INFO] [engine.py:160:__init__] RANK=2 STAGE=1 LAYERS=5 [4, 9) STAGE_PARAMS=407416 (0.407M) TOTAL_PARAMS=814832 (0.815M) UNIQUE_PARAMS=408304 (0.408M)
+[default2]:[W ProcessGroupNCCL.cpp:1707] Warning: 0NCCL_AVOID_RECORD_STREAMS=1 has no effect for point-to-point collectives. (function operator())
+[default0]:[W ProcessGroupNCCL.cpp:1707] Warning: 0NCCL_AVOID_RECORD_STREAMS=1 has no effect for point-to-point collectives. (function operator())
+[default0]:[2024-08-08 11:37:48,677] [INFO] [engine.py:160:__init__] RANK=0 STAGE=0 LAYERS=4 [0, 4) STAGE_PARAMS=407416 (0.407M) TOTAL_PARAMS=814832 (0.815M) UNIQUE_PARAMS=408304 (0.408M)
+[default3]:[2024-08-08 11:37:48,767] [INFO] [torch_checkpoint_engine.py:27:load] [Torch] Loading checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/mp_rank_00_model_states.pt...
+[default3]:[2024-08-08 11:37:48,768] [INFO] [torch_checkpoint_engine.py:29:load] [Torch] Loaded checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/mp_rank_00_model_states.pt.
+[default3]:[2024-08-08 11:37:48,768] [INFO] [torch_checkpoint_engine.py:27:load] [Torch] Loading checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/mp_rank_01_model_states.pt...
+[default3]:[2024-08-08 11:37:48,769] [INFO] [torch_checkpoint_engine.py:29:load] [Torch] Loaded checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/mp_rank_01_model_states.pt.
+[default3]:[2024-08-08 11:37:48,770] [INFO] [torch_checkpoint_engine.py:27:load] [Torch] Loading checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/layer_04-model_00-model_states.pt...
+[default3]:[2024-08-08 11:37:48,770] [INFO] [torch_checkpoint_engine.py:29:load] [Torch] Loaded checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/layer_04-model_00-model_states.pt.
+[default3]:[2024-08-08 11:37:48,770] [INFO] [torch_checkpoint_engine.py:27:load] [Torch] Loading checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/layer_04-model_00-model_states.pt...
+[default3]:[2024-08-08 11:37:48,771] [INFO] [torch_checkpoint_engine.py:29:load] [Torch] Loaded checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/layer_04-model_00-model_states.pt.
+[default3]:[2024-08-08 11:37:48,793] [INFO] [torch_checkpoint_engine.py:27:load] [Torch] Loading checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/layer_06-model_00-model_states.pt...
+[default3]:[2024-08-08 11:37:48,793] [INFO] [torch_checkpoint_engine.py:29:load] [Torch] Loaded checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/layer_06-model_00-model_states.pt.
+[default3]:[2024-08-08 11:37:48,793] [INFO] [torch_checkpoint_engine.py:27:load] [Torch] Loading checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/layer_06-model_00-model_states.pt...
+[default3]:[2024-08-08 11:37:48,793] [INFO] [torch_checkpoint_engine.py:29:load] [Torch] Loaded checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/layer_06-model_00-model_states.pt.
+[default3]:[2024-08-08 11:37:48,797] [INFO] [torch_checkpoint_engine.py:27:load] [Torch] Loading checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/zero_pp_rank_1_mp_rank_01_optim_states.pt...
+[default3]:[2024-08-08 11:37:48,799] [INFO] [torch_checkpoint_engine.py:29:load] [Torch] Loaded checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/zero_pp_rank_1_mp_rank_01_optim_states.pt.
+[default3]:[2024-08-08 11:37:48,799] [INFO] [engine.py:3023:_get_all_zero_checkpoint_state_dicts] successfully read 2 ZeRO state_dicts for rank 3
+[default3]:[2024-08-08 11:37:48,813] [INFO] [engine.py:2973:_load_zero_checkpoint] loading 2 zero partition checkpoints for rank 3
+[default3]:time (ms) | load-checkpoint: 48.08
+[default1]:[2024-08-08 11:37:48,766] [INFO] [torch_checkpoint_engine.py:27:load] [Torch] Loading checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/mp_rank_00_model_states.pt...
+[default1]:[2024-08-08 11:37:48,768] [INFO] [torch_checkpoint_engine.py:29:load] [Torch] Loaded checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/mp_rank_00_model_states.pt.
+[default2]:[2024-08-08 11:37:48,767] [INFO] [torch_checkpoint_engine.py:27:load] [Torch] Loading checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/mp_rank_00_model_states.pt...
+[default1]:[2024-08-08 11:37:48,768] [INFO] [torch_checkpoint_engine.py:27:load] [Torch] Loading checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/mp_rank_00_model_states.pt...
+[default1]:[2024-08-08 11:37:48,769] [INFO] [torch_checkpoint_engine.py:29:load] [Torch] Loaded checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/mp_rank_00_model_states.pt.
+[default2]:[2024-08-08 11:37:48,770] [INFO] [torch_checkpoint_engine.py:29:load] [Torch] Loaded checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/mp_rank_00_model_states.pt.
+[default2]:[2024-08-08 11:37:48,770] [INFO] [torch_checkpoint_engine.py:27:load] [Torch] Loading checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/mp_rank_01_model_states.pt...
+[default2]:[2024-08-08 11:37:48,771] [INFO] [torch_checkpoint_engine.py:29:load] [Torch] Loaded checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/mp_rank_01_model_states.pt.
+[default2]:[2024-08-08 11:37:48,772] [INFO] [torch_checkpoint_engine.py:27:load] [Torch] Loading checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/layer_04-model_00-model_states.pt...
+[default1]:[2024-08-08 11:37:48,769] [INFO] [torch_checkpoint_engine.py:27:load] [Torch] Loading checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/layer_01-model_00-model_states.pt...
+[default1]:[2024-08-08 11:37:48,770] [INFO] [torch_checkpoint_engine.py:29:load] [Torch] Loaded checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/layer_01-model_00-model_states.pt.
+[default1]:[2024-08-08 11:37:48,770] [INFO] [torch_checkpoint_engine.py:27:load] [Torch] Loading checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/layer_01-model_00-model_states.pt...
+[default1]:[2024-08-08 11:37:48,771] [INFO] [torch_checkpoint_engine.py:29:load] [Torch] Loaded checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/layer_01-model_00-model_states.pt.
+[default1]:[2024-08-08 11:37:48,771] [INFO] [torch_checkpoint_engine.py:27:load] [Torch] Loading checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/layer_03-model_00-model_states.pt...
+[default1]:[2024-08-08 11:37:48,772] [INFO] [torch_checkpoint_engine.py:29:load] [Torch] Loaded checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/layer_03-model_00-model_states.pt.
+[default1]:[2024-08-08 11:37:48,772] [INFO] [torch_checkpoint_engine.py:27:load] [Torch] Loading checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/layer_03-model_00-model_states.pt...
+[default1]:[2024-08-08 11:37:48,772] [INFO] [torch_checkpoint_engine.py:29:load] [Torch] Loaded checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/layer_03-model_00-model_states.pt.
+[default1]:[2024-08-08 11:37:48,773] [INFO] [torch_checkpoint_engine.py:27:load] [Torch] Loading checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/zero_pp_rank_1_mp_rank_00_optim_states.pt...
+[default1]:[2024-08-08 11:37:48,775] [INFO] [torch_checkpoint_engine.py:29:load] [Torch] Loaded checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/zero_pp_rank_1_mp_rank_00_optim_states.pt.
+[default1]:[2024-08-08 11:37:48,775] [INFO] [engine.py:3023:_get_all_zero_checkpoint_state_dicts] successfully read 2 ZeRO state_dicts for rank 1
+[default2]:[2024-08-08 11:37:48,773] [INFO] [torch_checkpoint_engine.py:29:load] [Torch] Loaded checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/layer_04-model_00-model_states.pt.
+[default1]:[2024-08-08 11:37:48,777] [INFO] [engine.py:2973:_load_zero_checkpoint] loading 2 zero partition checkpoints for rank 1
+[default2]:[2024-08-08 11:37:48,773] [INFO] [torch_checkpoint_engine.py:27:load] [Torch] Loading checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/layer_04-model_00-model_states.pt...
+[default0]:/home/intern/LYZ/LLM/Megatron-DeepSpeed/megatron/utils.py:349: UserWarning: Parameter count with the embeddings will be inaccurate with PP > 1, as the first and last stage hold several copies of the embeddings
+[default2]:[2024-08-08 11:37:48,774] [INFO] [torch_checkpoint_engine.py:29:load] [Torch] Loaded checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/layer_04-model_00-model_states.pt.
+[default2]:[2024-08-08 11:37:48,775] [INFO] [torch_checkpoint_engine.py:27:load] [Torch] Loading checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/layer_06-model_00-model_states.pt...
+[default0]:  warnings.warn("Parameter count with the embeddings will be inaccurate with PP > 1, as the first and last stage hold several copies of the embeddings")
+[default2]:[2024-08-08 11:37:48,776] [INFO] [torch_checkpoint_engine.py:29:load] [Torch] Loaded checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/layer_06-model_00-model_states.pt.
+[default2]:[2024-08-08 11:37:48,776] [INFO] [torch_checkpoint_engine.py:27:load] [Torch] Loading checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/layer_06-model_00-model_states.pt...
+[default2]:[2024-08-08 11:37:48,776] [INFO] [torch_checkpoint_engine.py:29:load] [Torch] Loaded checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/layer_06-model_00-model_states.pt.
+[default2]:[2024-08-08 11:37:48,776] [INFO] [torch_checkpoint_engine.py:27:load] [Torch] Loading checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/zero_pp_rank_0_mp_rank_01_optim_states.pt...
+[default2]:[2024-08-08 11:37:48,778] [INFO] [torch_checkpoint_engine.py:29:load] [Torch] Loaded checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/zero_pp_rank_0_mp_rank_01_optim_states.pt.
+[default2]:[2024-08-08 11:37:48,779] [INFO] [engine.py:3023:_get_all_zero_checkpoint_state_dicts] successfully read 2 ZeRO state_dicts for rank 2
+[default2]:[2024-08-08 11:37:48,780] [INFO] [engine.py:2973:_load_zero_checkpoint] loading 2 zero partition checkpoints for rank 2
+[default0]:[2024-08-08 11:37:48,767] [INFO] [torch_checkpoint_engine.py:27:load] [Torch] Loading checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/mp_rank_00_model_states.pt...
+[default0]:[2024-08-08 11:37:48,770] [INFO] [torch_checkpoint_engine.py:29:load] [Torch] Loaded checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/mp_rank_00_model_states.pt.
+[default0]:[2024-08-08 11:37:48,770] [INFO] [torch_checkpoint_engine.py:27:load] [Torch] Loading checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/mp_rank_00_model_states.pt...
+[default0]:[2024-08-08 11:37:48,772] [INFO] [torch_checkpoint_engine.py:29:load] [Torch] Loaded checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/mp_rank_00_model_states.pt.
+[default0]:[2024-08-08 11:37:48,772] [INFO] [torch_checkpoint_engine.py:27:load] [Torch] Loading checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/layer_01-model_00-model_states.pt...
+[default0]:[2024-08-08 11:37:48,772] [INFO] [torch_checkpoint_engine.py:29:load] [Torch] Loaded checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/layer_01-model_00-model_states.pt.
+[default0]:[2024-08-08 11:37:48,773] [INFO] [torch_checkpoint_engine.py:27:load] [Torch] Loading checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/layer_01-model_00-model_states.pt...
+[default0]:[2024-08-08 11:37:48,773] [INFO] [torch_checkpoint_engine.py:29:load] [Torch] Loaded checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/layer_01-model_00-model_states.pt.
+[default0]:[2024-08-08 11:37:48,774] [INFO] [torch_checkpoint_engine.py:27:load] [Torch] Loading checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/layer_03-model_00-model_states.pt...
+[default0]:[2024-08-08 11:37:48,775] [INFO] [torch_checkpoint_engine.py:29:load] [Torch] Loaded checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/layer_03-model_00-model_states.pt.
+[default0]:[2024-08-08 11:37:48,775] [INFO] [torch_checkpoint_engine.py:27:load] [Torch] Loading checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/layer_03-model_00-model_states.pt...
+[default0]:[2024-08-08 11:37:48,775] [INFO] [torch_checkpoint_engine.py:29:load] [Torch] Loaded checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/layer_03-model_00-model_states.pt.
+[default0]: > using checkpoint value 0.0001 for learning rate
+[default0]: > using checkpoint value 1e-06 for minimum learning rate
+[default0]: > using checkpoint value 5 for warmup iterations
+[default0]: > using checkpoint value 12 for total number of iterations
+[default0]: > using checkpoint value cosine for decay style
+[default0]:[2024-08-08 11:37:48,776] [INFO] [torch_checkpoint_engine.py:27:load] [Torch] Loading checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/zero_pp_rank_0_mp_rank_00_optim_states.pt...
+[default0]:[2024-08-08 11:37:48,778] [INFO] [torch_checkpoint_engine.py:29:load] [Torch] Loaded checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step100/zero_pp_rank_0_mp_rank_00_optim_states.pt.
+[default0]:[2024-08-08 11:37:48,778] [INFO] [engine.py:3023:_get_all_zero_checkpoint_state_dicts] successfully read 2 ZeRO state_dicts for rank 0
+[default0]:[2024-08-08 11:37:48,779] [INFO] [engine.py:2973:_load_zero_checkpoint] loading 2 zero partition checkpoints for rank 0
+[default0]: checkpoint version 3.0
+[default0]:  successfully loaded checkpoint from /home/intern/LYZ/LLM/mixtral_8x7B_v0_1 at iteration 100
+[default0]:estimated model parameters: 0.000814832
+[default0]:estimated model parameters without embeddings: 1.776e-06
+[default0]:[after model, optimizer, and learning rate scheduler are built] datetime: 2024-08-08 11:37:48 
+[default0]:> building train, validation, and test datasets ...
+[default0]: > datasets target sizes (minimum size):
+[default0]:    train:      10000
+[default0]:    validation: 128000
+[default0]:    test:       16000
+[default0]:> building train, validation, and test datasets for GPT ...
+[default0]: > building dataset index ...
+[default0]:    reading sizes...
+[default0]:    reading pointers...
+[default0]:    reading document index...
+[default0]:    creating numpy buffer of mmap...
+[default0]:    creating memory view of numpy buffer...
+[default0]: > finished creating indexed dataset in 0.000246 seconds
+[default0]:    number of documents: 219763
+[default0]: > dataset split:
+[default0]:    train:
+[default0]:     document indices in [0, 212950) total of 212950 documents
+[default0]:    validation:
+[default0]:     document indices in [212950, 219543) total of 6593 documents
+[default0]:    test:
+[default0]:     document indices in [219543, 219763) total of 220 documents
+[default0]: > loading doc-idx mapping from /home/intern/LYZ/LLM/dataset/openwebtxt_275M/openwebtxt/train_train_indexmap_10000ns_512sl_42s_doc_idx.npy
+[default0]: > loading sample-idx mapping from /home/intern/LYZ/LLM/dataset/openwebtxt_275M/openwebtxt/train_train_indexmap_10000ns_512sl_42s_sample_idx.npy
+[default0]: > loading shuffle-idx mapping from /home/intern/LYZ/LLM/dataset/openwebtxt_275M/openwebtxt/train_train_indexmap_10000ns_512sl_42s_shuffle_idx.npy
+[default0]:    loaded indexed file in 0.002 seconds
+[default0]:    total number of samples: 272416
+[default0]:    total number of epochs: 1
+[default0]: > WARNING: could not find index map files, building the indices on rank 0 ...
+[default0]: > last epoch number of samples (1616) is smaller than 95.0% of number of samples per epoch (8425), setting separate_last_epoch to True
+[default0]: > elasped time to build and save doc-idx mapping (seconds): 0.007126
+[default0]:    using:
+[default0]:     number of documents:       6593
+[default0]:     number of epochs:          16
+[default0]:     sequence length:           512
+[default0]:     total number of samples:   134809
+[default0]: > elasped time to build and save sample-idx mapping (seconds): 0.003747
+[default0]: > building shuffle index with split [0, 126384) and [126384, 134809) ...
+[default0]: > elasped time to build and save shuffle-idx mapping (seconds): 0.004260
+[default0]: > loading doc-idx mapping from /home/intern/LYZ/LLM/dataset/openwebtxt_275M/openwebtxt/train_valid_indexmap_128000ns_512sl_42s_doc_idx.npy
+[default0]: > loading sample-idx mapping from /home/intern/LYZ/LLM/dataset/openwebtxt_275M/openwebtxt/train_valid_indexmap_128000ns_512sl_42s_sample_idx.npy
+[default0]: > loading shuffle-idx mapping from /home/intern/LYZ/LLM/dataset/openwebtxt_275M/openwebtxt/train_valid_indexmap_128000ns_512sl_42s_shuffle_idx.npy
+[default0]:    loaded indexed file in 0.001 seconds
+[default0]:    total number of samples: 134810
+[default0]:    total number of epochs: 16
+[default0]: > WARNING: could not find index map files, building the indices on rank 0 ...
+[default0]: > last epoch number of samples (188) is smaller than 95.0% of number of samples per epoch (287), setting separate_last_epoch to True
+[default0]: > elasped time to build and save doc-idx mapping (seconds): 0.000621
+[default0]:    using:
+[default0]:     number of documents:       220
+[default0]:     number of epochs:          56
+[default0]:     sequence length:           512
+[default0]:     total number of samples:   16100
+[default0]: > elasped time to build and save sample-idx mapping (seconds): 0.000314
+[default0]: > building shuffle index with split [0, 15812) and [15812, 16100) ...
+[default0]: > elasped time to build and save shuffle-idx mapping (seconds): 0.000541
+[default0]: > loading doc-idx mapping from /home/intern/LYZ/LLM/dataset/openwebtxt_275M/openwebtxt/train_test_indexmap_16000ns_512sl_42s_doc_idx.npy
+[default0]: > loading sample-idx mapping from /home/intern/LYZ/LLM/dataset/openwebtxt_275M/openwebtxt/train_test_indexmap_16000ns_512sl_42s_sample_idx.npy
+[default0]: > loading shuffle-idx mapping from /home/intern/LYZ/LLM/dataset/openwebtxt_275M/openwebtxt/train_test_indexmap_16000ns_512sl_42s_shuffle_idx.npy
+[default0]:    loaded indexed file in 0.001 seconds
+[default0]:    total number of samples: 16101
+[default0]:    total number of epochs: 56
+[default0]:> finished creating GPT datasets ...
+[default3]:time (ms) | model-and-optimizer-setup: 959.05 | train/valid/test-data-iterators-setup: 496.33
+[default2]:[000-001] 0.0008B / 0.0000B
+[default0]:[after dataloaders are built] datetime: 2024-08-08 11:37:49 
+[default0]:done with setup ...
+[default0]:training ...
+[default0]:Number of parameters: [tensor rank - pipeline rank] w/ and w/o embeddings:
+[default0]:[000-000] 0.0008B / 0.0000B
+[default0]:[before the start of training step] datetime: 2024-08-08 11:37:49 
+[default0]:[2024-08-08 11:37:49,815] [INFO] [checkpointing.py:541:forward] Activation Checkpointing Information
+[default0]:[2024-08-08 11:37:49,815] [INFO] [checkpointing.py:542:forward] ----Partition Activations True, CPU CHECKPOINTING False
+[default0]:[2024-08-08 11:37:49,815] [INFO] [checkpointing.py:543:forward] ----contiguous Memory Checkpointing False with 2 total layers
+[default0]:[2024-08-08 11:37:49,815] [INFO] [checkpointing.py:545:forward] ----Synchronization False
+[default0]:[2024-08-08 11:37:49,815] [INFO] [checkpointing.py:546:forward] ----Profiling time in checkpointing False
+[default1]:[W ProcessGroupNCCL.cpp:1707] Warning: 0NCCL_AVOID_RECORD_STREAMS=1 has no effect for point-to-point collectives. (function operator())
+[default0]:[W ProcessGroupNCCL.cpp:1707] Warning: 0NCCL_AVOID_RECORD_STREAMS=1 has no effect for point-to-point collectives. (function operator())
+[default2]:[W ProcessGroupNCCL.cpp:1707] Warning: 0NCCL_AVOID_RECORD_STREAMS=1 has no effect for point-to-point collectives. (function operator())
+[default3]:[W ProcessGroupNCCL.cpp:1707] Warning: 0NCCL_AVOID_RECORD_STREAMS=1 has no effect for point-to-point collectives. (function operator())
+[default3]: iteration      110/     748 | consumed samples:          300 | consumed tokens:       153600 | elapsed time per iteration (s): 0.26 | learning rate: 1.000E-06 | global batch size:     6 | lm loss: 1.082443E+01 | loss scale: 4096.0 | grad norm: 0.132 | num zeros: 0.0 | number of skipped iterations:   0 | number of nan iterations:   0 | samples per second: 23.314 | TFLOPs: 0.01 |
+[default2]:[Rank 2] (after 110 iterations) memory (MB) | allocated: 216.1689453125 | max allocated: 1319.22900390625 | reserved: 2188.0 | max reserved: 2188.0
+[default0]:[Rank 0] (after 110 iterations) memory (MB) | allocated: 20.13916015625 | max allocated: 974.92138671875 | reserved: 1004.0 | max reserved: 1004.0
+[default3]: iteration      120/     748 | consumed samples:          360 | consumed tokens:       184320 | elapsed time per iteration (s): 0.05 | learning rate: 1.000E-06 | global batch size:     6 | lm loss: 1.082467E+01 | loss scale: 4096.0 | grad norm: 0.123 | num zeros: 0.0 | number of skipped iterations:   0 | number of nan iterations:   0 | samples per second: 118.587 | TFLOPs: 0.04 |
+[default3]: iteration      130/     748 | consumed samples:          420 | consumed tokens:       215040 | elapsed time per iteration (s): 0.05 | learning rate: 1.000E-06 | global batch size:     6 | lm loss: 1.082429E+01 | loss scale: 4096.0 | grad norm: 0.125 | num zeros: 0.0 | number of skipped iterations:   0 | number of nan iterations:   0 | samples per second: 130.435 | TFLOPs: 0.04 |
+[default3]: iteration      140/     748 | consumed samples:          496 | consumed tokens:       253952 | elapsed time per iteration (s): 0.06 | learning rate: 1.000E-06 | global batch size:     8 | lm loss: 1.082471E+01 | loss scale: 4096.0 | grad norm: 0.110 | num zeros: 0.0 | number of skipped iterations:   0 | number of nan iterations:   0 | samples per second: 136.739 | TFLOPs: 0.04 |
+[default3]: iteration      150/     748 | consumed samples:          576 | consumed tokens:       294912 | elapsed time per iteration (s): 0.06 | learning rate: 1.000E-06 | global batch size:     8 | lm loss: 1.082495E+01 | loss scale: 4096.0 | grad norm: 0.116 | num zeros: 0.0 | number of skipped iterations:   0 | number of nan iterations:   0 | samples per second: 125.889 | TFLOPs: 0.04 |
+[default3]:[2024-08-08 11:37:54,214] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step150/zero_pp_rank_1_mp_rank_01_optim_states.pt...
+[default1]:[2024-08-08 11:37:54,216] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step150/zero_pp_rank_1_mp_rank_00_optim_states.pt...
+[default3]:[2024-08-08 11:37:54,221] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step150/zero_pp_rank_1_mp_rank_01_optim_states.pt.
+[default1]:[2024-08-08 11:37:54,221] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step150/zero_pp_rank_1_mp_rank_00_optim_states.pt.
+[default1]:[2024-08-08 11:37:54,221] [INFO] [engine.py:3483:_save_zero_checkpoint] zero checkpoint saved /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step150/zero_pp_rank_1_mp_rank_00_optim_states.pt
+[default1]:[2024-08-08 11:37:54,221] [INFO] [torch_checkpoint_engine.py:33:commit] [Torch] Checkpoint global_step150 is ready now!
+[default2]:[2024-08-08 11:37:54,210] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step150/layer_04-model_00-model_states.pt...
+[default2]:[2024-08-08 11:37:54,211] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step150/layer_04-model_00-model_states.pt.
+[default3]:[2024-08-08 11:37:54,221] [INFO] [engine.py:3483:_save_zero_checkpoint] zero checkpoint saved /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step150/zero_pp_rank_1_mp_rank_01_optim_states.pt
+[default2]:[2024-08-08 11:37:54,211] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step150/layer_06-model_00-model_states.pt...
+[default3]:[2024-08-08 11:37:54,221] [INFO] [torch_checkpoint_engine.py:33:commit] [Torch] Checkpoint global_step150 is ready now!
+[default2]:[2024-08-08 11:37:54,211] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step150/layer_06-model_00-model_states.pt.
+[default3]:time (ms) | save-checkpoint: 14.05
+[default2]:[2024-08-08 11:37:54,212] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step150/mp_rank_01_model_states.pt...
+[default2]:[2024-08-08 11:37:54,213] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step150/mp_rank_01_model_states.pt.
+[default2]:[2024-08-08 11:37:54,214] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step150/zero_pp_rank_0_mp_rank_01_optim_states.pt...
+[default2]:[2024-08-08 11:37:54,218] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step150/zero_pp_rank_0_mp_rank_01_optim_states.pt.
+[default2]:[2024-08-08 11:37:54,218] [INFO] [engine.py:3483:_save_zero_checkpoint] zero checkpoint saved /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step150/zero_pp_rank_0_mp_rank_01_optim_states.pt
+[default2]:[2024-08-08 11:37:54,219] [INFO] [torch_checkpoint_engine.py:33:commit] [Torch] Checkpoint global_step150 is ready now!
+[default0]:saving checkpoint at iteration     150 to /home/intern/LYZ/LLM/mixtral_8x7B_v0_1
+[default0]:[2024-08-08 11:37:54,208] [INFO] [logging.py:96:log_dist] [Rank 0] [Torch] Checkpoint global_step150 is about to be saved!
+[default0]:[2024-08-08 11:37:54,210] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step150/layer_01-model_00-model_states.pt...
+[default0]:[2024-08-08 11:37:54,211] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step150/layer_01-model_00-model_states.pt.
+[default0]:[2024-08-08 11:37:54,212] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step150/layer_03-model_00-model_states.pt...
+[default0]:[2024-08-08 11:37:54,213] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step150/layer_03-model_00-model_states.pt.
+[default0]:[2024-08-08 11:37:54,213] [INFO] [logging.py:96:log_dist] [Rank 0] Saving model checkpoint: /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step150/mp_rank_00_model_states.pt
+[default0]:[2024-08-08 11:37:54,213] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step150/mp_rank_00_model_states.pt...
+[default0]:[2024-08-08 11:37:54,215] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step150/mp_rank_00_model_states.pt.
+[default0]:[2024-08-08 11:37:54,216] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step150/zero_pp_rank_0_mp_rank_00_optim_states.pt...
+[default0]:[2024-08-08 11:37:54,220] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step150/zero_pp_rank_0_mp_rank_00_optim_states.pt.
+[default0]:[2024-08-08 11:37:54,221] [INFO] [engine.py:3483:_save_zero_checkpoint] zero checkpoint saved /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step150/zero_pp_rank_0_mp_rank_00_optim_states.pt
+[default0]:[2024-08-08 11:37:54,221] [INFO] [torch_checkpoint_engine.py:33:commit] [Torch] Checkpoint global_step150 is ready now!
+[default0]:  successfully saved checkpoint at iteration     150 to /home/intern/LYZ/LLM/mixtral_8x7B_v0_1
+[default3]: iteration      160/     748 | consumed samples:          676 | consumed tokens:       346112 | elapsed time per iteration (s): 0.07 | learning rate: 1.000E-06 | global batch size:    10 | lm loss: 1.082422E+01 | loss scale: 4096.0 | grad norm: 0.128 | num zeros: 0.0 | number of skipped iterations:   0 | number of nan iterations:   0 | samples per second: 135.394 | TFLOPs: 0.04 |
+[default3]: iteration      170/     748 | consumed samples:          788 | consumed tokens:       403456 | elapsed time per iteration (s): 0.07 | learning rate: 1.000E-06 | global batch size:    12 | lm loss: 1.082479E+01 | loss scale: 4096.0 | grad norm: 0.099 | num zeros: 0.0 | number of skipped iterations:   0 | number of nan iterations:   0 | samples per second: 161.504 | TFLOPs: 0.05 |
+[default3]: iteration      180/     748 | consumed samples:          916 | consumed tokens:       468992 | elapsed time per iteration (s): 0.08 | learning rate: 1.000E-06 | global batch size:    14 | lm loss: 1.082489E+01 | loss scale: 4096.0 | grad norm: 0.102 | num zeros: 0.0 | number of skipped iterations:   0 | number of nan iterations:   0 | samples per second: 172.677 | TFLOPs: 0.06 |
+[default3]: iteration      190/     748 | consumed samples:         1064 | consumed tokens:       544768 | elapsed time per iteration (s): 0.10 | learning rate: 1.000E-06 | global batch size:    16 | lm loss: 1.082437E+01 | loss scale: 4096.0 | grad norm: 0.095 | num zeros: 0.0 | number of skipped iterations:   0 | number of nan iterations:   0 | samples per second: 167.097 | TFLOPs: 0.05 |
+[default3]: iteration      200/     748 | consumed samples:         1224 | consumed tokens:       626688 | elapsed time per iteration (s): 0.10 | learning rate: 1.000E-06 | global batch size:    16 | lm loss: 1.082453E+01 | loss scale: 4096.0 | grad norm: 0.110 | num zeros: 0.0 | number of skipped iterations:   0 | number of nan iterations:   0 | samples per second: 159.529 | TFLOPs: 0.05 |
+[default3]:-----------------------------------------------------------------------------------------
+[default3]:valid loss at iteration 200 | lm loss value: 1.082422E+01 | lm loss PPL: 5.022266E+04 | 
+[default3]:-----------------------------------------------------------------------------------------
+[default3]:[2024-08-08 11:38:42,422] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step200/zero_pp_rank_1_mp_rank_01_optim_states.pt...
+[default3]:[2024-08-08 11:38:42,427] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step200/zero_pp_rank_1_mp_rank_01_optim_states.pt.
+[default3]:[2024-08-08 11:38:42,427] [INFO] [engine.py:3483:_save_zero_checkpoint] zero checkpoint saved /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step200/zero_pp_rank_1_mp_rank_01_optim_states.pt
+[default3]:[2024-08-08 11:38:42,427] [INFO] [torch_checkpoint_engine.py:33:commit] [Torch] Checkpoint global_step200 is ready now!
+[default3]:time (ms) | save-checkpoint: 12.99
+[default1]:[2024-08-08 11:38:42,424] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step200/zero_pp_rank_1_mp_rank_00_optim_states.pt...
+[default1]:[2024-08-08 11:38:42,428] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step200/zero_pp_rank_1_mp_rank_00_optim_states.pt.
+[default1]:[2024-08-08 11:38:42,428] [INFO] [engine.py:3483:_save_zero_checkpoint] zero checkpoint saved /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step200/zero_pp_rank_1_mp_rank_00_optim_states.pt
+[default1]:[2024-08-08 11:38:42,428] [INFO] [torch_checkpoint_engine.py:33:commit] [Torch] Checkpoint global_step200 is ready now!
+[default2]:[2024-08-08 11:38:42,418] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step200/layer_04-model_00-model_states.pt...
+[default2]:[2024-08-08 11:38:42,419] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step200/layer_04-model_00-model_states.pt.
+[default2]:[2024-08-08 11:38:42,420] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step200/layer_06-model_00-model_states.pt...
+[default2]:[2024-08-08 11:38:42,420] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step200/layer_06-model_00-model_states.pt.
+[default2]:[2024-08-08 11:38:42,420] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step200/mp_rank_01_model_states.pt...
+[default2]:[2024-08-08 11:38:42,421] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step200/mp_rank_01_model_states.pt.
+[default2]:[2024-08-08 11:38:42,422] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step200/zero_pp_rank_0_mp_rank_01_optim_states.pt...
+[default2]:[2024-08-08 11:38:42,426] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step200/zero_pp_rank_0_mp_rank_01_optim_states.pt.
+[default2]:[2024-08-08 11:38:42,426] [INFO] [engine.py:3483:_save_zero_checkpoint] zero checkpoint saved /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step200/zero_pp_rank_0_mp_rank_01_optim_states.pt
+[default2]:[2024-08-08 11:38:42,427] [INFO] [torch_checkpoint_engine.py:33:commit] [Torch] Checkpoint global_step200 is ready now!
+[default0]:saving checkpoint at iteration     200 to /home/intern/LYZ/LLM/mixtral_8x7B_v0_1
+[default0]:[2024-08-08 11:38:42,417] [INFO] [logging.py:96:log_dist] [Rank 0] [Torch] Checkpoint global_step200 is about to be saved!
+[default0]:[2024-08-08 11:38:42,418] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step200/layer_01-model_00-model_states.pt...
+[default0]:[2024-08-08 11:38:42,420] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step200/layer_01-model_00-model_states.pt.
+[default0]:[2024-08-08 11:38:42,420] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step200/layer_03-model_00-model_states.pt...
+[default0]:[2024-08-08 11:38:42,421] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step200/layer_03-model_00-model_states.pt.
+[default0]:[2024-08-08 11:38:42,421] [INFO] [logging.py:96:log_dist] [Rank 0] Saving model checkpoint: /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step200/mp_rank_00_model_states.pt
+[default0]:[2024-08-08 11:38:42,421] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step200/mp_rank_00_model_states.pt...
+[default0]:[2024-08-08 11:38:42,423] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step200/mp_rank_00_model_states.pt.
+[default0]:[2024-08-08 11:38:42,424] [INFO] [torch_checkpoint_engine.py:21:save] [Torch] Saving /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step200/zero_pp_rank_0_mp_rank_00_optim_states.pt...
+[default0]:[2024-08-08 11:38:42,428] [INFO] [torch_checkpoint_engine.py:23:save] [Torch] Saved /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step200/zero_pp_rank_0_mp_rank_00_optim_states.pt.
+[default0]:[2024-08-08 11:38:42,428] [INFO] [engine.py:3483:_save_zero_checkpoint] zero checkpoint saved /home/intern/LYZ/LLM/mixtral_8x7B_v0_1/global_step200/zero_pp_rank_0_mp_rank_00_optim_states.pt
+[default0]:[2024-08-08 11:38:42,428] [INFO] [torch_checkpoint_engine.py:33:commit] [Torch] Checkpoint global_step200 is ready now!
+[default0]:  successfully saved checkpoint at iteration     200 to /home/intern/LYZ/LLM/mixtral_8x7B_v0_1
+[default0]:[exiting program at iteration 200] datetime: 2024-08-08 11:38:42 
